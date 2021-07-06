@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Find your movie</string>
+    <string name="temperature_label">Температура</string>
+    <string name="feels_like_label">Ощущается как</string>
+    <string name="city_coordinates">lt/ln: %s, %s"</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="now_playing">Now playing</string>
+    <string name="item_naming">Naming</string>
+    <string name="release_date">release date</string>
+    <string name="rating">rating</string>
+</resources>
