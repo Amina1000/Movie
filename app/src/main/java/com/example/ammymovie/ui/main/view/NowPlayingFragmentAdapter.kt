@@ -11,6 +11,7 @@ import com.example.ammymovie.ui.main.model.Movie
 
 class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter.ViewHolder>() {
 
+    // Адаптер для первого списка
     private var movieData: List<Movie> = listOf()
 
     fun setData(data: List<Movie>) {

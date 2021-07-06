@@ -3,6 +3,7 @@ package com.example.ammymovie.ui.main.model
 import java.util.*
 
 data class Movie(
+    // Класс для хранения данных
     val name:String,
     val releaseDate:Date,
     val favorite:Boolean=false,

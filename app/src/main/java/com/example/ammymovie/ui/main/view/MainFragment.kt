@@ -39,11 +39,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Инициализация данных
         initRecycler()
         initViewModel()
     }
 
     private fun initRecycler() {
+        // Создаем два списка
         val recyclerviewPlaying = binding.recyclerPlaying
         val recyclerviewUpcoming = binding.recyclerUpcoming
 
@@ -70,6 +72,7 @@ class MainFragment : Fragment() {
     }
 
     private fun renderData(appState: AppState) {
+        //Заполняем списки
         val loadingLayout = binding.loadingLayout
         val mainView = binding.mainView
         when (appState) {
