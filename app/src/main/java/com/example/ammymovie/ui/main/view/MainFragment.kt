@@ -46,14 +46,11 @@ class MainFragment : Fragment() {
 
     private fun initRecycler() {
         // Создаем два списка
-        val recyclerviewPlaying = binding.recyclerPlaying
-        val recyclerviewUpcoming = binding.recyclerUpcoming
-
-        recyclerviewPlaying.adapter = adapterPlayNow
-        recyclerviewUpcoming.adapter = adapterUpcoming
+        binding.recyclerPlaying.adapter = adapterPlayNow
+        binding.recyclerUpcoming.adapter = adapterUpcoming
         val itemDecoration = dividerItemDecoration()
-        recyclerviewPlaying.addItemDecoration(itemDecoration)
-        recyclerviewUpcoming.addItemDecoration(itemDecoration)
+        binding.recyclerPlaying.addItemDecoration(itemDecoration)
+        binding.recyclerUpcoming.addItemDecoration(itemDecoration)
     }
 
     private fun dividerItemDecoration(): DividerItemDecoration {
@@ -67,7 +64,7 @@ class MainFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
+        viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
         viewModel.getDataFromLocalSource()
     }
 

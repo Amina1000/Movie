@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
                 return true
             }
+
             // реагирует на нажатие каждой клавиши
             override fun onQueryTextChange(newText: String): Boolean {
                 return true
@@ -47,3 +48,5 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 }
+
+

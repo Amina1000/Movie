@@ -12,7 +12,7 @@ import com.example.ammymovie.ui.main.model.Movie
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 
     //Адаптер для второго списка
-    private var movieData: List<Movie> = listOf()
+    private var movieData: List<Movie> = emptyList()
 
     fun setData(data: List<Movie>) {
         movieData = data
@@ -25,7 +25,8 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     ): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_upcoming, parent, false) as View)
+                .inflate(R.layout.item_upcoming, parent, false) as View
+        )
 
     }
 
@@ -34,7 +35,7 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     }
 
     override fun getItemCount(): Int {
-       return movieData.size
+        return movieData.size
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

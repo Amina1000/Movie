@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.view.MainActivity" >
+    tools:context=".ui.main.view.MainActivity">
 
     <LinearLayout
         android:id="@+id/container"
@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:id="@+id/btnHome"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_15_dp"
-            android:background="@drawable/ic_baseline_home_24"
+            android:layout_margin="@dimen/margin_btn_dp"
+            android:background="@drawable/ic_baseline_home_20"
             >
         </com.google.android.material.button.MaterialButton>
 
@@ -30,8 +30,8 @@
             android:layout_width="wrap_content"
             android:id="@+id/btnFavorite"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_baseline_stars_24"
-            android:layout_margin="@dimen/margin_15_dp"
+            android:background="@drawable/ic_baseline_star_border_20"
+            android:layout_margin="@dimen/margin_btn_dp"
             >
         </com.google.android.material.button.MaterialButton>
 
@@ -39,8 +39,8 @@
             android:layout_width="wrap_content"
             android:id="@+id/btnRating"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_15_dp"
-            android:background="@drawable/ic_baseline_addchart_24"
+            android:layout_margin="@dimen/margin_btn_dp"
+            android:background="@drawable/ic_baseline_graphic_eq_20"
             >
         </com.google.android.material.button.MaterialButton>
 
