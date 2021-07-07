@@ -10,6 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rec_view_play"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold|italic"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_playing"
             android:layout_width="match_parent"
@@ -19,7 +26,12 @@
             android:scrollbars="horizontal"
             app:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/item_now_playing" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upcoming"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold|italic"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_upcoming"
             android:layout_width="match_parent"

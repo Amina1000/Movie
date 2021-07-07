@@ -6,10 +6,12 @@ import com.example.ammymovie.ui.main.model.Repository
 import com.example.ammymovie.ui.main.model.RepositoryImpl
 import java.lang.Thread.sleep
 
-class MainViewModel (private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-                     private val repositoryImpl: Repository = RepositoryImpl()
-) : ViewModel(){
+class MainViewModel(
+    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
+    private val repositoryImpl: Repository = RepositoryImpl()
+) : ViewModel() {
 
+    // Получаем данные
     fun getLiveData() = liveDataToObserve
 
     fun getDataFromLocalSource() {

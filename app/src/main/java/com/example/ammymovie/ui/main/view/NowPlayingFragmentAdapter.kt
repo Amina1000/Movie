@@ -11,7 +11,8 @@ import com.example.ammymovie.ui.main.model.Movie
 
 class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter.ViewHolder>() {
 
-    private var movieData: List<Movie> = listOf()
+    // Адаптер для первого списка
+    private var movieData: List<Movie> = emptyList()
 
     fun setData(data: List<Movie>) {
         movieData = data
@@ -24,7 +25,8 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
     ): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_now_playing, parent, false) as View)
+                .inflate(R.layout.item_now_playing, parent, false) as View
+        )
 
     }
 

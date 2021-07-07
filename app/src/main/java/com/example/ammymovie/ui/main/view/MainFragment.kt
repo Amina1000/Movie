@@ -39,19 +39,18 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Инициализация данных
         initRecycler()
         initViewModel()
     }
 
     private fun initRecycler() {
-        val recyclerviewPlaying = binding.recyclerPlaying
-        val recyclerviewUpcoming = binding.recyclerUpcoming
-
-        recyclerviewPlaying.adapter = adapterPlayNow
-        recyclerviewUpcoming.adapter = adapterUpcoming
+        // Создаем два списка
+        binding.recyclerPlaying.adapter = adapterPlayNow
+        binding.recyclerUpcoming.adapter = adapterUpcoming
         val itemDecoration = dividerItemDecoration()
-        recyclerviewPlaying.addItemDecoration(itemDecoration)
-        recyclerviewUpcoming.addItemDecoration(itemDecoration)
+        binding.recyclerPlaying.addItemDecoration(itemDecoration)
+        binding.recyclerUpcoming.addItemDecoration(itemDecoration)
     }
 
     private fun dividerItemDecoration(): DividerItemDecoration {
@@ -65,11 +64,12 @@ class MainFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
+        viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
         viewModel.getDataFromLocalSource()
     }
 
     private fun renderData(appState: AppState) {
+        //Заполняем списки
         val loadingLayout = binding.loadingLayout
         val mainView = binding.mainView
         when (appState) {

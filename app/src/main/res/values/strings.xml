@@ -8,4 +8,6 @@
     <string name="item_naming">Naming</string>
     <string name="release_date">release date</string>
     <string name="rating">rating</string>
+    <string name="rec_view_play">Now Plaing</string>
+    <string name="search_menu_item">search</string>
 </resources>
