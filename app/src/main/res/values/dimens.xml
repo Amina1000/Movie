@@ -5,4 +5,6 @@
     <dimen name="title_size">24sp</dimen>
     <dimen name="release_date">16sp</dimen>
     <dimen name="separator">10dp</dimen>
+    <dimen name="title_detail">32sp</dimen>
+    <dimen name="description_size">20sp</dimen>
 </resources>

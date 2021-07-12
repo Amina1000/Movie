@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_view_come"
         android:layout_width="@dimen/item_width"
         android:layout_height="@dimen/item_height"
         app:srcCompat="@drawable/cinematografico"

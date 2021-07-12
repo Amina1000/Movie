@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_view"
+        android:id="@+id/image_view_play"
         android:layout_width="@dimen/item_width"
         android:layout_height="@dimen/item_height"
         app:srcCompat="@drawable/cinematografico"

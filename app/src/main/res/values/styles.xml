@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="detail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/description_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="btn_main_menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:showText">false</item>
+        <item name="android:textOn">""</item>
+        <item name="android:textOff">""</item>
+        <item name="android:text">""</item>
+        <item name="android:layout_margin">@dimen/margin_btn_dp</item>
+    </style>
+</resources>

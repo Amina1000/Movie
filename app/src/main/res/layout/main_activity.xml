@@ -16,33 +16,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+        <ToggleButton
             android:id="@+id/btnHome"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_btn_dp"
+            style="@style/btn_main_menu"
             android:background="@drawable/ic_baseline_home_20"
-            >
-        </com.google.android.material.button.MaterialButton>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+            android:checked="true"/>
+        <ToggleButton
             android:id="@+id/btnFavorite"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_baseline_star_border_20"
-            android:layout_margin="@dimen/margin_btn_dp"
-            >
-        </com.google.android.material.button.MaterialButton>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+            android:background="@drawable/ic_baseline_star_border_20_off"
+            style="@style/btn_main_menu"
+            android:checked="false"/>
+        <ToggleButton
             android:id="@+id/btnRating"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_btn_dp"
-            android:background="@drawable/ic_baseline_graphic_eq_20"
-            >
-        </com.google.android.material.button.MaterialButton>
+            android:background="@drawable/ic_baseline_graphic_eq_20_off"
+            style="@style/btn_main_menu"
+            android:checked="false"/>
 
     </LinearLayout>
 
