@@ -11,7 +11,7 @@
         android:layout_height="@dimen/item_height"
         app:srcCompat="@drawable/cinematografico"
         android:clickable="true"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:focusable="true" />
     <TextView
         android:id="@+id/title_upcome"
@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/item_naming"
         android:gravity="center"
+        android:textColor="@color/teal_700"
         android:textSize="@dimen/title_size" />
     <TextView
         android:id="@+id/date_upcome"
@@ -27,4 +28,12 @@
         android:gravity="center"
         android:text="@string/release_date"
         android:textSize="@dimen/release_date" />
+    <TextView
+        android:id="@+id/genre_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/genre"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 </LinearLayout>

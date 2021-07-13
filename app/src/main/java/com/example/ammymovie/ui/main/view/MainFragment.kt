@@ -8,9 +8,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
-import com.example.ammymovie.databinding.MainFragmentBinding
+import com.example.ammymovie.databinding.FragmentMainBinding
 import com.example.ammymovie.ui.main.model.Movie
 import com.example.ammymovie.ui.main.viewmodel.AppState
 import com.example.ammymovie.ui.main.viewmodel.MainViewModel
@@ -23,9 +24,10 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
-    private var _binding: MainFragmentBinding? = null
+    private var _binding: FragmentMainBinding? = null
     private val adapterPlayNow = NowPlayingFragmentAdapter()
     private val adapterUpcoming = UpcomingFragmentAdapter()
+    private var isLandscape = false
 
     private val binding
         get() = _binding!!
@@ -34,7 +36,9 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        isLandscape = resources.configuration.orientation ==
+                android.content.res.Configuration.ORIENTATION_LANDSCAPE
         return binding.root
     }
 
@@ -47,6 +51,10 @@ class MainFragment : Fragment() {
 
     private fun initRecycler() {
         // Создаем два списка
+        if (isLandscape) {
+            binding.recyclerPlaying.layoutManager = GridLayoutManager(context, 2)
+            binding.recyclerUpcoming.layoutManager = GridLayoutManager(context, 2)
+        }
         binding.recyclerPlaying.adapter = adapterPlayNow
         binding.recyclerUpcoming.adapter = adapterUpcoming
         val itemDecoration = dividerItemDecoration()
@@ -80,8 +88,8 @@ class MainFragment : Fragment() {
                 loadingLayout.visibility = View.GONE
                 adapterPlayNow.setData(movieDataPlay)
                 adapterUpcoming.setData(movieDataCome)
-                adapterPlayNow.setOnItemClickListener {openScreen(it)}
-                adapterUpcoming.setOnItemClickListener{openScreen(it)}
+                adapterPlayNow.setOnItemClickListener { openScreen(it) }
+                adapterUpcoming.setOnItemClickListener { openScreen(it) }
             }
             is AppState.Loading -> {
                 loadingLayout.visibility = View.VISIBLE

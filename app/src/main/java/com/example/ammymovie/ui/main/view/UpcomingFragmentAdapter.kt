@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.R
@@ -15,7 +14,7 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
 
     //Адаптер для второго списка
     private var movieData: List<Movie> = emptyList()
-    private var itemClickListener: OnItemClickListener?=null
+    private var itemClickListener: OnItemClickListener? = null
 
     fun setData(data: List<Movie>) {
         movieData = data
@@ -40,6 +39,7 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     override fun getItemCount(): Int {
         return movieData.size
     }
+
     // Интерфейс для обработки нажатий, как в ListView
     fun interface OnItemClickListener {
         fun onItemClick(movie: Movie)
@@ -49,13 +49,14 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
         this.itemClickListener = itemClickListener
     }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(movie: Movie) {
             itemView.findViewById<TextView>(R.id.title_upcome).text = movie.name
             itemView.findViewById<TextView>(R.id.date_upcome).text = movie.releaseDate.toString()
-            itemView.findViewById<AppCompatImageView>(R.id.image_view_come)
-            itemView.setOnClickListener {
+            itemView.findViewById<TextView>(R.id.genre_item).text = movie.genre
+            itemView.findViewById<AppCompatImageView>(R.id.image_view_come).setOnClickListener {
                 itemClickListener?.onItemClick(movie)
             }
         }

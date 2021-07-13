@@ -21,18 +21,22 @@ data class Movie(
 
 fun getNowPlayingMovies(): List<Movie> {
     return listOf(
-        Movie("Фильм 1","Movie 1", Calendar.getInstance().time, true, "8.1"),
-        Movie("Фильм 2","Movie 2", Calendar.getInstance().time, false, "6.8"),
-        Movie("Фильм 3","Movie 3", Calendar.getInstance().time, true, "7.4"),
-        Movie("Фильм 4","Movie 4", Calendar.getInstance().time, false, "5.2")
+        Movie("Фильм 1", "Movie 1", Calendar.getInstance().time, true, "8.1"),
+        Movie("Фильм 2", "Movie 2", Calendar.getInstance().time, false, "6.8"),
+        Movie("Фильм 3", "Movie 3", Calendar.getInstance().time, true, "7.4"),
+        Movie("Фильм 4", "Movie 4", Calendar.getInstance().time, false, "5.2"),
+        Movie("Фильм 9", "Movie 4", Calendar.getInstance().time, false, "5.2"),
+        Movie("Фильм 10", "Movie 4", Calendar.getInstance().time, false, "5.2")
     )
 }
 
 fun getUpcomingMovies(): List<Movie> {
     return listOf(
-        Movie("Фильм 5","Movie 5", Calendar.getInstance().time),
-        Movie("Фильм 6","Movie 6", Calendar.getInstance().time),
-        Movie("Фильм 7","Movie 7", Calendar.getInstance().time),
-        Movie("Фильм 8","Movie 8", Calendar.getInstance().time)
+        Movie("Фильм 5", "Movie 5", Calendar.getInstance().time, false, "", "", "Фантастика"),
+        Movie("Фильм 6", "Movie 6", Calendar.getInstance().time, false, "", "", "Мелодрама"),
+        Movie("Фильм 7", "Movie 7", Calendar.getInstance().time, false, "", "", "Боевик"),
+        Movie("Фильм 8", "Movie 8", Calendar.getInstance().time, false, "", "", "Триллер"),
+        Movie("Фильм 11", "Movie 8", Calendar.getInstance().time, false, "", "", "Комедия"),
+        Movie("Фильм 12", "Movie 8", Calendar.getInstance().time, false, "", "", "Документальный")
     )
 }

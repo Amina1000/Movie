@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.view.MainActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
+
         <ToggleButton
             android:id="@+id/btnHome"
             style="@style/btn_main_menu"
+            android:layout_gravity="start"
             android:background="@drawable/ic_baseline_home_20"
-            android:checked="true"/>
+            android:checked="true" />
+
         <ToggleButton
             android:id="@+id/btnFavorite"
-            android:background="@drawable/ic_baseline_star_border_20_off"
             style="@style/btn_main_menu"
-            android:checked="false"/>
+            android:layout_gravity="center"
+            android:background="@drawable/ic_baseline_star_border_20_off"
+            android:checked="false" />
+
         <ToggleButton
             android:id="@+id/btnRating"
-            android:background="@drawable/ic_baseline_graphic_eq_20_off"
             style="@style/btn_main_menu"
-            android:checked="false"/>
+            android:layout_gravity="end"
+            android:background="@drawable/ic_baseline_graphic_eq_20_off"
+            android:checked="false" />
 
-    </LinearLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-</FrameLayout>
+</LinearLayout>
