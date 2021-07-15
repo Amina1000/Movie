@@ -3,17 +3,9 @@ package com.example.ammymovie.ui.main.model
 import java.util.*
 
 class RepositoryImpl : Repository {
-
-    override fun getMoviesFromServer(): Movie {
-        return Movie("Фильм из сервера","Movie Server", Calendar.getInstance().time)
-    }
-
-    override fun getNowPlayingFromLocalStorage(): List<Movie> {
-        return getNowPlayingMovies()
-    }
-
-    override fun getUpcomingFromLocalStorage(): List<Movie> {
-        return getUpcomingMovies()
-    }
-
+//Воспользуемся преимуществами языка
+    override fun getMoviesFromServer()= Movie(
+        "Фильм из сервера","Movie Server", Calendar.getInstance().time)
+    override fun getNowPlayingFromLocalStorage()=getNowPlayingMovies()
+    override fun getUpcomingFromLocalStorage()= getUpcomingMovies()
 }

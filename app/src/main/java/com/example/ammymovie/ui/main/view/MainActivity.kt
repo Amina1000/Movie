@@ -2,7 +2,6 @@ package com.example.ammymovie.ui.main.view
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -19,10 +18,11 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         initButtons()
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(binding.container.id, MainFragment.newInstance())
-                .commitNow()
+        when (savedInstanceState) {
+            null ->
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.container.id, MainFragment.newInstance())
+                    .commitNow()
         }
     }
 
@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
                 return true
             }
-
             // реагирует на нажатие каждой клавиши
             override fun onQueryTextChange(newText: String): Boolean {
                 return true

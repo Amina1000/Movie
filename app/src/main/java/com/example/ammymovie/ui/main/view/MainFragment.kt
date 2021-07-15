@@ -1,5 +1,6 @@
 package com.example.ammymovie.ui.main.view
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 class MainFragment : Fragment() {
 
     companion object {
+        const val NUM_COLUMN=2
         fun newInstance() = MainFragment()
     }
 
@@ -27,8 +29,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val adapterPlayNow = NowPlayingFragmentAdapter()
     private val adapterUpcoming = UpcomingFragmentAdapter()
-    private var isLandscape = false
-
+    private var isLandscape =false
     private val binding
         get() = _binding!!
 
@@ -37,8 +38,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        isLandscape = resources.configuration.orientation ==
-                android.content.res.Configuration.ORIENTATION_LANDSCAPE
         return binding.root
     }
 
@@ -51,9 +50,13 @@ class MainFragment : Fragment() {
 
     private fun initRecycler() {
         // Создаем два списка
-        if (isLandscape) {
-            binding.recyclerPlaying.layoutManager = GridLayoutManager(context, 2)
-            binding.recyclerUpcoming.layoutManager = GridLayoutManager(context, 2)
+        isLandscape = when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                binding.recyclerPlaying.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                binding.recyclerUpcoming.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                true
+            }
+            else -> false
         }
         binding.recyclerPlaying.adapter = adapterPlayNow
         binding.recyclerUpcoming.adapter = adapterUpcoming
@@ -86,10 +89,18 @@ class MainFragment : Fragment() {
                 val movieDataPlay = appState.movieDataPlay
                 val movieDataCome = appState.movieDataCome
                 loadingLayout.visibility = View.GONE
-                adapterPlayNow.setData(movieDataPlay)
-                adapterUpcoming.setData(movieDataCome)
-                adapterPlayNow.setOnItemClickListener { openScreen(it) }
-                adapterUpcoming.setOnItemClickListener { openScreen(it) }
+                // используем функцию расширения вместо setData
+                adapterPlayNow.also {
+                    it.movieData = movieDataPlay
+                    it.notifyDataSetChanged()
+                }
+                adapterUpcoming.also {
+                    it.movieData = movieDataCome
+                    it.notifyDataSetChanged()
+                }
+                // реализация метода при помощи лямбда, it - объект типа Movie
+                adapterPlayNow.setOnItemClickListener{openScreen(it)}
+                adapterUpcoming.setOnItemClickListener {openScreen(it)}
             }
             is AppState.Loading -> {
                 loadingLayout.visibility = View.VISIBLE
@@ -106,11 +117,11 @@ class MainFragment : Fragment() {
 
     private fun openScreen(movie: Movie) {
         val manager = activity?.supportFragmentManager
-        if (manager != null) {
-            val bundle = Bundle()
-            bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+        manager?.let {
             manager.beginTransaction()
-                .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                .replace(R.id.container, DetailsFragment.newInstance( Bundle().apply {
+                    putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+                }))
                 .addToBackStack("")
                 .commitAllowingStateLoss()
         }

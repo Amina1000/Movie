@@ -9,4 +9,6 @@
     <dimen name="description_size">20sp</dimen>
     <dimen name="margin_desc">5dp</dimen>
     <dimen name="star">20dp</dimen>
+    <dimen name="card_corner_radius">15dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
 </resources>
