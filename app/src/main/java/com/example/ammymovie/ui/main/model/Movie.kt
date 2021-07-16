@@ -21,7 +21,7 @@ data class Movie(
     val revenue: String = ""
 ) : Parcelable
 
-const val DATE_TIME_FORMAT = "dd.MMM.yy"
+
 
 fun getNowPlayingMovies()=listOf(
         Movie("Фильм 1", "Movie 1", Calendar.getInstance().time, true, "8.1"),
@@ -41,11 +41,4 @@ fun getUpcomingMovies()= listOf(
         Movie("Фильм 12", "Movie 8", Calendar.getInstance().time, false, "", "", "Документальный")
     )
 
-// добавила функцию расширения для класса Date.
-fun Date.format(): String =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault())
-            .format(this)
-    } else {
-        this.toString()
-    }
+

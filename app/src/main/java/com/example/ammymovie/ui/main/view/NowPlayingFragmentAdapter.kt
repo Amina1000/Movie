@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.R
 import com.example.ammymovie.ui.main.model.Movie
-import com.example.ammymovie.ui.main.model.format
+
 
 class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter.ViewHolder>() {
 
@@ -54,15 +54,16 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
                 findViewById<TextView>(R.id.title_play).text = movie.name
                 findViewById<TextView>(R.id.rating).text = movie.rating
                 // меняем формат даты на DATE_TIME_FORMAT, и тип на string
-                findViewById<TextView>(R.id.date_play).text =movie.releaseDate.format()
+                findViewById<TextView>(R.id.date_play).text = movie.releaseDate.format()
                 findViewById<CardView>(R.id.card_play).setOnClickListener {
                     onSomeItemClickListener?.invoke(movie)
                 }
-                findViewById<AppCompatImageView>(R.id.image_view_play).setOnClickListener {
+                val imageMovie = findViewById<AppCompatImageView>(R.id.image_view_play)
+                imageMovie.createImageFromResource()
+                imageMovie.setOnClickListener {
                     onSomeItemClickListener?.invoke(movie)
                 }
             }
         }
     }
-
 }

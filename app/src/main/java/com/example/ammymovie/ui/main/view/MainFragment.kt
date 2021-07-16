@@ -16,7 +16,6 @@ import com.example.ammymovie.databinding.FragmentMainBinding
 import com.example.ammymovie.ui.main.model.Movie
 import com.example.ammymovie.ui.main.viewmodel.AppState
 import com.example.ammymovie.ui.main.viewmodel.MainViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
 
@@ -80,15 +79,13 @@ class MainFragment : Fragment() {
         viewModel.getDataFromLocalSource()
     }
 
-    private fun renderData(appState: AppState) {
+    private fun renderData(appState: AppState) = with(binding){
         //Заполняем списки
-        val loadingLayout = binding.loadingLayout
-        val mainView = binding.mainView
         when (appState) {
             is AppState.Success -> {
                 val movieDataPlay = appState.movieDataPlay
                 val movieDataCome = appState.movieDataCome
-                loadingLayout.visibility = View.GONE
+                loadingLayout.hideIf {true}
                 // используем функцию расширения вместо setData
                 adapterPlayNow.also {
                     it.movieData = movieDataPlay
@@ -103,14 +100,14 @@ class MainFragment : Fragment() {
                 adapterUpcoming.setOnItemClickListener {openScreen(it)}
             }
             is AppState.Loading -> {
-                loadingLayout.visibility = View.VISIBLE
+                loadingLayout.showIf {true}
             }
             is AppState.Error -> {
-                loadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(mainView, "Error", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Reload") { viewModel.getDataFromLocalSource() }
-                    .show()
+                loadingLayout.hideIf {true}
+                mainView.showSnackBar(getString(R.string.error)
+                    ,getString(R.string.reload)
+                    ,{viewModel.getDataFromLocalSource()})
+                mainView.hideKeyboard()
             }
         }
     }
@@ -119,7 +116,8 @@ class MainFragment : Fragment() {
         val manager = activity?.supportFragmentManager
         manager?.let {
             manager.beginTransaction()
-                .replace(R.id.container, DetailsFragment.newInstance( Bundle().apply {
+                .replace(R.id.container, DetailsFragment.newInstance(Bundle()
+                    .apply {
                     putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
                 }))
                 .addToBackStack("")

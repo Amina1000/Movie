@@ -32,7 +32,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Инициализация данных
-        arguments?.getParcelable<Movie>(BUNDLE_EXTRA)?.let {initView(it)}
+        arguments?.getParcelable<Movie>(BUNDLE_EXTRA)?.let { initView(it) }
     }
 
     private fun initView(movie: Movie) {
@@ -40,11 +40,11 @@ class DetailsFragment : Fragment() {
             titleRus.text = movie.name
             titleOriginal.text = movie.nameOrigin
             genre.text = movie.genre
-            duration.text = movie.duration
+            duration.apply { text = movie.duration }.hideIf { movie.duration == "" }
             ratingDetail.text = movie.rating
-            revenue.text = movie.revenue
+            revenue.apply { text = movie.revenue }.showIf { movie.revenue != "" }
             description.text = movie.description
-            dateRelease.text = movie.releaseDate.toString()
+            dateRelease.text = movie.releaseDate.format()
             btnFavorite.setBackgroundResource(
                 changeBackButton(movie.favorite)
             )

@@ -9,8 +9,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.R
 import com.example.ammymovie.ui.main.model.Movie
-import com.example.ammymovie.ui.main.model.format
-
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 
     //Адаптер для второго списка

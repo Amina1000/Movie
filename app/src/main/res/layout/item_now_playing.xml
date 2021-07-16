@@ -14,7 +14,6 @@
             android:id="@+id/image_view_play"
             android:layout_width="@dimen/item_width"
             android:layout_height="@dimen/item_height"
-            app:srcCompat="@drawable/cinematografico"
             android:clickable="true"
             android:scaleType="centerCrop"
             android:focusable="true" />

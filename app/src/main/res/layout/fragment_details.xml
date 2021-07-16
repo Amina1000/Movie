@@ -79,6 +79,7 @@
             <TextView
                 android:id="@+id/revenue"
                 android:text="@string/revenue"
+                android:visibility="gone"
                 style="@style/detail" />
             <TextView
                 android:id="@+id/date_release"
