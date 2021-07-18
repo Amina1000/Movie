@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,28 +15,8 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-
-        <ToggleButton
-            android:id="@+id/btnHome"
-            style="@style/btn_main_menu"
-            android:layout_gravity="start"
-            android:background="@drawable/ic_baseline_home_20"
-            android:checked="true" />
-
-        <ToggleButton
-            android:id="@+id/btnFavorite"
-            style="@style/btn_main_menu"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_baseline_star_border_20_off"
-            android:checked="false" />
-
-        <ToggleButton
-            android:id="@+id/btnRating"
-            style="@style/btn_main_menu"
-            android:layout_gravity="end"
-            android:background="@drawable/ic_baseline_graphic_eq_20_off"
-            android:checked="false" />
+        android:layout_gravity="bottom"
+        app:menu="@menu/navigation_menu" >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
