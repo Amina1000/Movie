@@ -31,15 +31,17 @@ fun Date.format(): String =
     } else {
         this.toString()
     }
+
 //extension-функция для SnackBar
 //2.Напишите дополнительные extension-функции для SnackBar
 fun View.showSnackBar(
     text: String,
-    actionText:String,
-    action:(View) -> Unit,
+    actionText: String,
+    action: (View) -> Unit,
     length: Int = Snackbar.LENGTH_INDEFINITE
 ) {
-    Snackbar.make(this, text, length).setAction(actionText,action).show()}
+    Snackbar.make(this, text, length).setAction(actionText, action).show()
+}
 
 fun View.showSnackBar(
     message: String,
@@ -50,12 +52,26 @@ fun View.showSnackBar(
         .show()
 }
 
+fun View.showSnackBar(
+    messageId: Int,
+    context: Context?,
+    length: Int = Snackbar.LENGTH_INDEFINITE
+) {
+    context?.resources?.let {
+        Snackbar
+            .make(this, it.getString(messageId), length)
+            .show()
+    }
+}
+
 // Расширяем функционал вью для скрытия клавиатуры
 fun View.hideKeyboard(): Boolean {
     try {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-    } catch (ignored: RuntimeException) { }
+    } catch (ignored: RuntimeException) {
+    }
     return false
 }
 
@@ -67,7 +83,7 @@ fun View.showKeyboard() {
 }
 
 // Отображать вью в зависимости от условия
-inline fun View.showIf(condition: () -> Boolean) : View {
+inline fun View.showIf(condition: () -> Boolean): View {
     when {
         visibility != View.VISIBLE && condition() -> {
             visibility = View.VISIBLE
@@ -76,7 +92,7 @@ inline fun View.showIf(condition: () -> Boolean) : View {
     return this
 }
 
-inline fun View.hideIf(predicate: () -> Boolean) : View {
+inline fun View.hideIf(predicate: () -> Boolean): View {
     when {
         visibility != View.GONE && predicate() -> {
             visibility = View.GONE
