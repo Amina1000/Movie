@@ -48,20 +48,23 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        // Создаем два списка
+        with(binding){  // Создаем два списка
         isLandscape = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> {
-                binding.recyclerPlaying.layoutManager = GridLayoutManager(context, NUM_COLUMN)
-                binding.recyclerUpcoming.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                recyclerPlaying.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                recyclerUpcoming.layoutManager = GridLayoutManager(context, NUM_COLUMN)
                 true
             }
             else -> false
         }
-        binding.recyclerPlaying.adapter = adapterPlayNow
-        binding.recyclerUpcoming.adapter = adapterUpcoming
-        val itemDecoration = dividerItemDecoration()
-        binding.recyclerPlaying.addItemDecoration(itemDecoration)
-        binding.recyclerUpcoming.addItemDecoration(itemDecoration)
+
+            recyclerPlaying.adapter = adapterPlayNow
+            recyclerUpcoming.adapter = adapterUpcoming
+            val itemDecoration = dividerItemDecoration()
+            recyclerPlaying.addItemDecoration(itemDecoration)
+            recyclerUpcoming.addItemDecoration(itemDecoration)
+        }
+
     }
 
     private fun dividerItemDecoration(): DividerItemDecoration {
