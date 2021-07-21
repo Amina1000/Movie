@@ -1,13 +1,19 @@
 package com.example.ammymovie.ui.main.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentDetailsBinding
 import com.example.ammymovie.ui.main.model.Movie
+import com.example.ammymovie.ui.main.model.getDefaultMovie
+import com.example.ammymovie.ui.main.viewmodel.MovieDTO
+import com.example.ammymovie.ui.main.viewmodel.MovieLoader
+import com.example.ammymovie.ui.main.viewmodel.MovieLoaderListener
 
 class DetailsFragment : Fragment() {
 
@@ -15,9 +21,20 @@ class DetailsFragment : Fragment() {
         const val BUNDLE_EXTRA = "movie"
         fun newInstance(bundle: Bundle) = DetailsFragment().apply { arguments = bundle }
     }
+    private lateinit var movieBundle: Movie
+    private val onLoadListener=
+            object : MovieLoaderListener {
+
+            override fun onLoaded(movieDTO: MovieDTO) {
+                initView(movieDTO)
+            }
+
+            override fun onFailed(throwable: Throwable) {
+                //Обработка ошибки
+            }
+        }
 
     private var _binding: FragmentDetailsBinding? = null
-
     private val binding
         get() = _binding!!
 
@@ -29,29 +46,33 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Инициализация данных
-        arguments?.getParcelable<Movie>(BUNDLE_EXTRA)?.let { initView(it) }
+        movieBundle = arguments?.getParcelable(BUNDLE_EXTRA) ?: getDefaultMovie()
+        binding.mainView.visibility = View.GONE
+        val loader = MovieLoader(onLoadListener,movieBundle.id)
+        loader.loadMovie()
     }
 
-    private fun initView(movie: Movie) {
+    private fun initView(movieDTO: MovieDTO) {
         with(binding) {
-            titleRus.text = movie.name
-            titleOriginal.text = movie.nameOrigin
-            genre.text = movie.genre
-            duration.apply { text = movie.duration }.hideIf { movie.duration == "" }
-            ratingDetail.text = movie.rating
-            revenue.apply { text = movie.revenue }.showIf { movie.revenue != "" }
-            description.text = movie.description
-            dateRelease.text = movie.releaseDate.format()
+            mainView.visibility = View.VISIBLE
+            titleRus.text = movieDTO.title
+            titleOriginal.text = movieDTO.original_title
+            //genre.text = movieDTO.genre
+            duration.apply { text = movieDTO.duration }.hideIf { movieDTO.duration == "" }
+            ratingDetail.text = movieDTO.popularity.toString()
+            revenue.apply { text = movieDTO.revenue.toString() }.showIf { movieDTO.revenue != null }
+            description.text = movieDTO.overview
+            dateRelease.text = movieDTO.release_date
             btnFavorite.setBackgroundResource(
-                changeBackButton(movie.favorite)
+                changeBackButton(movieBundle.favorite)
             )
             btnFavorite.setOnClickListener {
-                val favorite = !movie.favorite
+                val favorite = !movieBundle.favorite
                 binding.btnFavorite.setBackgroundResource(changeBackButton(favorite))
-                movie.favorite = favorite
+                movieBundle.favorite = favorite
             }
         }
     }
