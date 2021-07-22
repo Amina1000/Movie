@@ -27,7 +27,7 @@ class MovieLoader(private val listener: MovieLoaderListener, private val movie: 
     fun loadMovie() {
         try {
             val handler = Handler()
-            val uri = getURL(movie)
+            val uri = getURL(movie,apiKey)
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
                 try {
@@ -55,20 +55,21 @@ class MovieLoader(private val listener: MovieLoaderListener, private val movie: 
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun getLines(reader: BufferedReader): String {
-        return reader.lines().collect(Collectors.joining("\n"))
-    }
 
-    private fun getURL(movie: Any) :URL{
-        return when (movie) {
-            is Int -> URL("https://api.themoviedb.org/3/movie/${movie}?api_key=${apiKey}&language=ru-RU")
-            is String -> URL("https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}")
-            else -> URL("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=ru-RU")
-        }
-    }
 }
 
+@RequiresApi(Build.VERSION_CODES.N)
+fun getLines(reader: BufferedReader): String {
+    return reader.lines().collect(Collectors.joining("\n"))
+}
+
+fun getURL(movie: Any,apiKey:String) :URL{
+    return when (movie) {
+        is Int -> URL("https://api.themoviedb.org/3/movie/${movie}?api_key=${apiKey}&language=ru-RU")
+        is String -> URL("https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}")
+        else -> URL("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=ru-RU")
+    }
+}
 interface MovieLoaderListener {
     fun onLoaded(movieDTO: MovieDTO)
     fun onFailed(throwable: Throwable)

@@ -21,21 +21,21 @@ data class Movie(
 ) : Parcelable
 
 fun getNowPlayingMovies()=listOf(
-        Movie(550,"Фильм 1", "Movie 1", Calendar.getInstance().time, true, "8.1"),
-        Movie(1,"Фильм 2", "Movie 2", Calendar.getInstance().time, false, "6.8"),
-        Movie(2,"Фильм 3", "Movie 3", Calendar.getInstance().time, true, "7.4"),
-        Movie(3,"Фильм 4", "Movie 4", Calendar.getInstance().time, false, "5.2"),
-        Movie(4,"Фильм 9", "Movie 4", Calendar.getInstance().time, false, "5.2"),
-        Movie(5,"Фильм 10", "Movie 4", Calendar.getInstance().time, false, "5.2")
+        Movie(602223,"Фильм 1", "Movie 1", Calendar.getInstance().time, true, "8.1"),
+        Movie(497698,"Фильм 2", "Movie 2", Calendar.getInstance().time, false, "6.8"),
+        Movie(379686,"Фильм 3", "Movie 3", Calendar.getInstance().time, true, "7.4"),
+        Movie(459151,"Фильм 4", "Movie 4", Calendar.getInstance().time, false, "5.2"),
+        Movie(508943,"Фильм 9", "Movie 4", Calendar.getInstance().time, false, "5.2"),
+        Movie(637649,"Фильм 10", "Movie 4", Calendar.getInstance().time, false, "5.2")
     )
 
 fun getUpcomingMovies()= listOf(
         Movie(343611,"Фильм 5", "Movie 5", Calendar.getInstance().time, false, "", "", "Фантастика"),
-        Movie(7,"Фильм 6", "Movie 6", Calendar.getInstance().time, false, "", "", "Мелодрама"),
-        Movie(8,"Фильм 7", "Movie 7", Calendar.getInstance().time, false, "", "", "Боевик"),
-        Movie(9,"Фильм 8", "Movie 8", Calendar.getInstance().time, false, "", "", "Триллер"),
-        Movie(10,"Фильм 11", "Movie 8", Calendar.getInstance().time, false, "", "", "Комедия"),
-        Movie(11,"Фильм 12", "Movie 8", Calendar.getInstance().time, false, "", "", "Документальный")
+        Movie(581726,"Фильм 6", "Movie 6", Calendar.getInstance().time, false, "", "", "Мелодрама"),
+        Movie(522478,"Фильм 7", "Movie 7", Calendar.getInstance().time, false, "", "", "Боевик"),
+        Movie(385128,"Фильм 8", "Movie 8", Calendar.getInstance().time, false, "", "", "Триллер"),
+        Movie(337404,"Фильм 11", "Movie 8", Calendar.getInstance().time, false, "", "", "Комедия"),
+        Movie(520763,"Фильм 12", "Movie 8", Calendar.getInstance().time, false, "", "", "Документальный")
     )
 fun getDefaultMovie() =  Movie(550,"Фильм", "Movie", Calendar.getInstance().time, false, "0")
 

@@ -1,7 +1,5 @@
 package com.example.ammymovie.ui.main.viewmodel
 
-import java.util.*
-
 /**
  * homework com.example.ammymovie.ui.main.model
  *
@@ -18,11 +16,4 @@ class MovieDTO(
     val duration: String?,
     val budget: Int?,
     val revenue: Int?
-)
-data class MovieListDTO(val results: List <ResultDTO>)
-
-data class ResultDTO(
-    val title: String?,
-    val release_date: String?,
-    val popularity: Double?
 )
