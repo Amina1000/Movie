@@ -17,7 +17,6 @@ import java.util.*
  * 16.07.2021
  */
 const val DATE_TIME_FORMAT = "dd.MMM.yy"
-const val AMMY_API_KEY = "e3a3441279eabd311384180ee90a3117"
 //extension-функция, обработка изображения
 fun AppCompatImageView.createImageFromResource() {
     setImageResource(R.drawable.cinematografico)

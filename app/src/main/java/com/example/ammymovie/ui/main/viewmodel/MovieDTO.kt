@@ -19,3 +19,10 @@ class MovieDTO(
     val budget: Int?,
     val revenue: Int?
 )
+data class MovieListDTO(val results: List <ResultDTO>)
+
+data class ResultDTO(
+    val title: String?,
+    val release_date: String?,
+    val popularity: Double?
+)

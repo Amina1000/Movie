@@ -25,7 +25,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_favorite"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:clickable="true"
             android:layout_weight="1"

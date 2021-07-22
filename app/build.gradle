@@ -28,6 +28,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apiKey  = properties.getProperty("TMDB_AMMY_API_KEY_v3", "")
+        it.buildConfigField "String", "AMMY_API_KEY", apiKey
+    }
     compileOptions {
         sourceCompatibility "1.8"
         targetCompatibility "1.8"
