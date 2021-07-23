@@ -1,4 +1,4 @@
-package com.example.ammymovie.ui.main.view
+package com.example.ammymovie.view
 
 import android.content.Context
 import android.icu.text.SimpleDateFormat
@@ -11,27 +11,15 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 /**
- * homework com.example.ammymovie.ui.main.view
+ * homework com.example.ammymovie.view
  *
  * @author Amina
  * 16.07.2021
  */
-const val DATE_TIME_FORMAT = "dd.MMM.yy"
-
 //extension-функция, обработка изображения
 fun AppCompatImageView.createImageFromResource() {
     setImageResource(R.drawable.cinematografico)
 }
-
-// добавила функцию расширения (extension-функцию) для класса Date.
-fun Date.format(): String =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault())
-            .format(this)
-    } else {
-        this.toString()
-    }
-
 //extension-функция для SnackBar
 //2.Напишите дополнительные extension-функции для SnackBar
 fun View.showSnackBar(
