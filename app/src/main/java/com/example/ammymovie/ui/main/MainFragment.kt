@@ -112,7 +112,7 @@ class MainFragment : Fragment() {
                     ,getString(R.string.reload)
                     ,{viewModel.getDataFromLocalSource()})
                 mainView.hideKeyboard()
-            }
+            }else-> mainView.showSnackBar("Нет данных для загрузки")
         }
     }
 

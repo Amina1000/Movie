@@ -2,7 +2,7 @@ package com.example.ammymovie.domain.repository
 
 import com.example.ammymovie.domain.model.Movie
 
-interface Repository {
+interface MainRepository {
     fun getNowPlayingFromLocalStorage(): List<Movie>
     fun getUpcomingFromLocalStorage(): List<Movie>
 }
