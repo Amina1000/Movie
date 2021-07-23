@@ -1,4 +1,6 @@
-package com.example.ammymovie.ui.main.model
+package com.example.ammymovie.domain.repository
+
+import com.example.ammymovie.domain.model.Movie
 
 interface Repository {
     fun getNowPlayingFromLocalStorage(): List<Movie>

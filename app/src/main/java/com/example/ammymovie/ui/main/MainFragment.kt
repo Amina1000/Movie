@@ -1,4 +1,4 @@
-package com.example.ammymovie.ui.main.view
+package com.example.ammymovie.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -13,9 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentMainBinding
-import com.example.ammymovie.ui.main.model.Movie
-import com.example.ammymovie.ui.main.viewmodel.AppState
-import com.example.ammymovie.ui.main.viewmodel.MainViewModel
+import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.ui.common.AppState
+import com.example.ammymovie.ui.detail.DetailsFragment
+import com.example.ammymovie.view.*
 
 class MainFragment : Fragment() {
 
@@ -121,8 +122,9 @@ class MainFragment : Fragment() {
             manager.beginTransaction()
                 .replace(R.id.container, DetailsFragment.newInstance(Bundle()
                     .apply {
-                    putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
-                }))
+                        putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+                    })
+                )
                 .addToBackStack("")
                 .commitAllowingStateLoss()
         }

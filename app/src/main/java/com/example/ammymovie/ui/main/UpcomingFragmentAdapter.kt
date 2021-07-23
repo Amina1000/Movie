@@ -1,11 +1,12 @@
-package com.example.ammymovie.ui.main.view
+package com.example.ammymovie.ui.main
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.databinding.ItemUpcomingBinding
-import com.example.ammymovie.ui.main.model.Movie
+import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.utils.format
 
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 

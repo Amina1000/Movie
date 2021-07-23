@@ -1,7 +1,7 @@
-package com.example.ammymovie.ui.main.viewmodel
+package com.example.ammymovie.domain.model
 
 /**
- * homework com.example.ammymovie.ui.main.model
+ * homework com.example.ammymovie.domain.model
  *
  * @author Amina
  * 21.07.2021

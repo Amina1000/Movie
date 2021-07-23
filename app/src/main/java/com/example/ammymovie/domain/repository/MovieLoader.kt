@@ -1,10 +1,11 @@
-package com.example.ammymovie.ui.main.viewmodel
+package com.example.ammymovie.ui.main
 
 import android.os.Build
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.ammymovie.BuildConfig
+import com.example.ammymovie.domain.model.MovieDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -14,7 +15,7 @@ import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 /**
- * homework com.example.ammymovie.ui.main.viewmodel
+ * homework com.example.ammymovie.viewmodel
  *
  * @author Amina
  * 21.07.2021

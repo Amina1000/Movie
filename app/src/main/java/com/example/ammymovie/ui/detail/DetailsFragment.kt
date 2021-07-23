@@ -1,4 +1,4 @@
-package com.example.ammymovie.ui.main.view
+package com.example.ammymovie.ui.detail
 
 import android.os.Build
 import android.os.Bundle
@@ -9,11 +9,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentDetailsBinding
-import com.example.ammymovie.ui.main.model.Movie
-import com.example.ammymovie.ui.main.model.getDefaultMovie
-import com.example.ammymovie.ui.main.viewmodel.MovieDTO
-import com.example.ammymovie.ui.main.viewmodel.MovieLoader
-import com.example.ammymovie.ui.main.viewmodel.MovieLoaderListener
+import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.domain.model.getDefaultMovie
+import com.example.ammymovie.view.hideIf
+import com.example.ammymovie.view.showIf
+import com.example.ammymovie.domain.model.MovieDTO
+import com.example.ammymovie.ui.main.MovieLoader
+import com.example.ammymovie.ui.main.MovieLoaderListener
 
 class DetailsFragment : Fragment() {
 

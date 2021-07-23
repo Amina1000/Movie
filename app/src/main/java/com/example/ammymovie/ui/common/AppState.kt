@@ -1,6 +1,6 @@
-package com.example.ammymovie.ui.main.viewmodel
+package com.example.ammymovie.ui.common
 
-import com.example.ammymovie.ui.main.model.Movie
+import com.example.ammymovie.domain.model.Movie
 
 sealed class AppState {
     // Добавила второй параметр лист, для второго списка
