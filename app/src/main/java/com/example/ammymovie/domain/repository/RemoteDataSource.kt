@@ -1,10 +1,9 @@
-package com.example.ammymovie.ui.main
+package com.example.ammymovie.domain.repository
 
 import android.os.Build
 import android.os.Handler
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.ammymovie.BuildConfig
 import com.example.ammymovie.domain.model.MovieDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -15,20 +14,19 @@ import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 /**
- * homework com.example.ammymovie.viewmodel
+ * homework com.example.ammymovie.domain.repository
  *
  * @author Amina
- * 21.07.2021
+ * 23.07.2021
  */
-class MovieLoader(private val listener: MovieLoaderListener, private val movie: Any) {
 
-    private val apiKey = BuildConfig.AMMY_API_KEY
+@RequiresApi(Build.VERSION_CODES.N)
+class RemoteDataSource {
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun loadMovie() {
+    fun loadMovie(requestLink:String, listener: MovieLoaderListener) {
         try {
             val handler = Handler()
-            val uri = getURL(movie,apiKey)
+            val uri = URL(requestLink)
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
                 try {
@@ -38,7 +36,7 @@ class MovieLoader(private val listener: MovieLoaderListener, private val movie: 
                     val bufferedReader =
                         BufferedReader(InputStreamReader(urlConnection.inputStream))
                     // преобразование ответа от сервера (JSON) в модель данных (WeatherDTO)
-                    val movieDTO =Gson().fromJson(getLines(bufferedReader), MovieDTO::class.java)
+                    val movieDTO = Gson().fromJson(getLines(bufferedReader), MovieDTO::class.java)
 
                     handler.post { listener.onLoaded(movieDTO) }
                 } catch (e: Exception) {
@@ -56,22 +54,7 @@ class MovieLoader(private val listener: MovieLoaderListener, private val movie: 
         }
     }
 
-
-}
-
-@RequiresApi(Build.VERSION_CODES.N)
-fun getLines(reader: BufferedReader): String {
-    return reader.lines().collect(Collectors.joining("\n"))
-}
-
-fun getURL(movie: Any,apiKey:String) :URL{
-    return when (movie) {
-        is Int -> URL("https://api.themoviedb.org/3/movie/${movie}?api_key=${apiKey}&language=ru-RU")
-        is String -> URL("https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movie}")
-        else -> URL("https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=ru-RU")
+    private fun getLines(reader: BufferedReader): String {
+        return reader.lines().collect(Collectors.joining("\n"))
     }
-}
-interface MovieLoaderListener {
-    fun onLoaded(movieDTO: MovieDTO)
-    fun onFailed(throwable: Throwable)
 }
