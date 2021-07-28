@@ -1,5 +1,7 @@
 package com.example.ammymovie.ui.main
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +10,14 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentMainBinding
 import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.service.MainBroadcastReceiver
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.detail.DetailsFragment
 import com.example.ammymovie.view.*
@@ -24,7 +28,6 @@ class MainFragment : Fragment() {
         const val NUM_COLUMN=2
         fun newInstance() = MainFragment()
     }
-
     private lateinit var viewModel: MainViewModel
     private var _binding: FragmentMainBinding? = null
     private val adapterPlayNow = NowPlayingFragmentAdapter()
@@ -33,11 +36,20 @@ class MainFragment : Fragment() {
     private val binding
         get() = _binding!!
 
+    //Урок 6 создаем объект ресивера
+    private val receiver = MainBroadcastReceiver()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        // Урок 6
+        // регистрируем ресивер смены языка.
+        context?.let {
+            LocalBroadcastManager.getInstance(it)
+                .registerReceiver(receiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
+        }
         return binding.root
     }
 
@@ -58,7 +70,6 @@ class MainFragment : Fragment() {
             }
             else -> false
         }
-
             recyclerPlaying.adapter = adapterPlayNow
             recyclerUpcoming.adapter = adapterUpcoming
             val itemDecoration = dividerItemDecoration()
@@ -131,8 +142,17 @@ class MainFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
         adapterPlayNow.removeListener()
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        //Урок 6
+        //Не забываем снять подписку на события, когда они уже никому не нужны.
+        context?.let {
+            LocalBroadcastManager.getInstance(it).unregisterReceiver(receiver)
+        }
+        super.onDestroy()
     }
 }

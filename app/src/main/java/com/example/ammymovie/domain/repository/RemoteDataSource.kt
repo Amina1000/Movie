@@ -2,6 +2,7 @@ package com.example.ammymovie.domain.repository
 
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.ammymovie.domain.model.MovieDTO
@@ -25,7 +26,7 @@ class RemoteDataSource {
 
     fun loadMovie(requestLink:String, listener: MovieLoaderListener) {
         try {
-            val handler = Handler()
+            val handler = Handler(Looper.getMainLooper())
             val uri = URL(requestLink)
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
