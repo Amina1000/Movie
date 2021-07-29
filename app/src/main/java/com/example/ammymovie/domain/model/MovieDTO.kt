@@ -1,12 +1,15 @@
 package com.example.ammymovie.domain.model
 
+import android.os.Parcel
+import android.os.Parcelable
+
 /**
  * homework com.example.ammymovie.domain.model
  *
  * @author Amina
  * 21.07.2021
  */
-class MovieDTO(
+data class MovieDTO(
     val id:Int?,
     val title: String?,
     val original_title: String?,
@@ -16,4 +19,42 @@ class MovieDTO(
     val duration: String?,
     val budget: Int?,
     val revenue: Int?
-)
+):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id)
+        parcel.writeString(title)
+        parcel.writeString(original_title)
+        parcel.writeString(release_date)
+        parcel.writeValue(popularity)
+        parcel.writeString(overview)
+        parcel.writeString(duration)
+        parcel.writeValue(budget)
+        parcel.writeValue(revenue)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MovieDTO> {
+        override fun createFromParcel(parcel: Parcel): MovieDTO {
+            return MovieDTO(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MovieDTO?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

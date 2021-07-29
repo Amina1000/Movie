@@ -11,6 +11,7 @@ import android.widget.Toast
  * @author Amina
  * 28.07.2021
  */
+
 class MainBroadcastReceiver : BroadcastReceiver() {
     // Урок 6
     // Подпишитесь на событие изменения и уведомляйте об этом пользователя.
