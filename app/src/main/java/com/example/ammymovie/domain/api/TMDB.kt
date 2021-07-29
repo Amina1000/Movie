@@ -11,9 +11,10 @@ import com.example.ammymovie.BuildConfig
 private const val apiKey = BuildConfig.AMMY_API_KEY
 private const val MAIN_LINK = "https://api.themoviedb.org/3/"
 
-fun getLink(movieLink: Any?) : String {
+fun getLink(movieLink: Any?, lan: String = "ru-RU"): String {
     return when (movieLink) {
-        is Int -> MAIN_LINK+"movie/${movieLink}?api_key=${apiKey}&language=ru-RU"
-        is String ->MAIN_LINK+"search/movie?api_key=${apiKey}&query=${movieLink}"
-        else ->MAIN_LINK+"movie/now_playing?api_key=${apiKey}&language=ru-RU"
-    }}
+        is Int -> MAIN_LINK + "movie/${movieLink}?api_key=${apiKey}&language=${lan}"
+        is String -> MAIN_LINK + "search/movie?api_key=${apiKey}&query=${movieLink}"
+        else -> MAIN_LINK + "movie/now_playing?api_key=${apiKey}&language=${lan}"
+    }
+}

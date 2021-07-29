@@ -1,11 +1,13 @@
-package com.example.ammymovie.domain.repository
+package com.example.ammymovie.service
 
+import android.app.IntentService
+import android.content.Intent
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.ammymovie.domain.model.MovieDTO
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.ammymovie.domain.api.getLink
+import com.example.ammymovie.domain.model.MovieListDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -15,18 +17,26 @@ import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 /**
- * homework com.example.ammymovie.domain.repository
+ * homework com.example.ammymovie.experiments
  *
  * @author Amina
- * 23.07.2021
+ * 27.07.2021
  */
+const val MAIN_SERVICE_EXTRA = "MainServiceExtra"
+const val MAIN_LOAD_EXTRA = "MainLoadExtra"
 
 @RequiresApi(Build.VERSION_CODES.N)
-class RemoteDataSource {
+class MainService(name: String? = "test") : IntentService(name) {
 
-    fun loadMovie(requestLink:String, listener: MovieLoaderListener) {
+    private val broadcastIntent = Intent(MAIN_SERVICE_EXTRA)
+
+    override fun onHandleIntent(intent: Intent?) {
+        val requestLink = getLink(Any())
+        loadListMovie(requestLink)
+    }
+
+    private fun loadListMovie(requestLink:String) {
         try {
-            val handler = Handler(Looper.getMainLooper())
             val uri = URL(requestLink)
             Thread {
                 lateinit var urlConnection: HttpsURLConnection
@@ -37,13 +47,12 @@ class RemoteDataSource {
                     val bufferedReader =
                         BufferedReader(InputStreamReader(urlConnection.inputStream))
                     // преобразование ответа от сервера (JSON) в модель данных (WeatherDTO)
-                    val movieDTO = Gson().fromJson(getLines(bufferedReader), MovieDTO::class.java)
+                    val movieListDTO = Gson().fromJson(getLines(bufferedReader), MovieListDTO::class.java)
+                    onResponse(movieListDTO)
 
-                    handler.post { listener.onLoaded(movieDTO) }
                 } catch (e: Exception) {
                     Log.e("", "Fail connection", e)
                     e.printStackTrace()
-                    listener.onFailed(e)
                 } finally {
                     urlConnection.disconnect()
                 }
@@ -51,11 +60,18 @@ class RemoteDataSource {
         } catch (e: MalformedURLException) {
             Log.e("", "Fail URI", e)
             e.printStackTrace()
-            listener.onFailed(e)
         }
     }
 
+    private fun onResponse(movieListDTO: MovieListDTO) {
+        val results = movieListDTO.results
+        results.let{
+            broadcastIntent.putParcelableArrayListExtra(MAIN_LOAD_EXTRA, results)
+            LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent)
+        }
+    }
     private fun getLines(reader: BufferedReader): String {
         return reader.lines().collect(Collectors.joining("\n"))
     }
+
 }
