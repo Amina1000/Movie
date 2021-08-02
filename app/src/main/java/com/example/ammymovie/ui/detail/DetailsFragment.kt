@@ -18,8 +18,6 @@ import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.view.hideKeyboard
 import com.example.ammymovie.view.showSnackBar
 
-const val DETAILS_INTENT_FILTER = "DETAILS INTENT FILTER"
-
 class DetailsFragment : Fragment() {
 
     companion object {

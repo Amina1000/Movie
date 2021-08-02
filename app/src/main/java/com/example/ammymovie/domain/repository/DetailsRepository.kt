@@ -1,6 +1,6 @@
 package com.example.ammymovie.domain.repository
 
-import com.example.ammymovie.domain.model.MovieDTO
+import okhttp3.Callback
 
 /**
  * homework com.example.ammymovie.domain.repository
@@ -9,8 +9,5 @@ import com.example.ammymovie.domain.model.MovieDTO
  * 23.07.2021
  */
 interface DetailsRepository {
-    fun getMovieDetailsFromServer(movieLink:Any,listener: MovieLoaderListener)
+    fun getMovieDetailsFromServer(movieLink:Any,callback: Callback)
 }
-interface MovieLoaderListener {
-    fun onLoaded(movieDTO: MovieDTO)
-    fun onFailed(throwable: Throwable) }

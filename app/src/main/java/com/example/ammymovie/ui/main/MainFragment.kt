@@ -1,7 +1,5 @@
 package com.example.ammymovie.ui.main
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
@@ -19,19 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentMainBinding
 import com.example.ammymovie.domain.model.Movie
-import com.example.ammymovie.domain.model.MovieDTO
-import com.example.ammymovie.service.MAIN_LOAD_EXTRA
-import com.example.ammymovie.service.MAIN_SERVICE_EXTRA
 import com.example.ammymovie.service.MainBroadcastReceiver
-import com.example.ammymovie.service.MainService
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.detail.DetailsFragment
 import com.example.ammymovie.view.hideIf
 import com.example.ammymovie.view.hideKeyboard
 import com.example.ammymovie.view.showIf
 import com.example.ammymovie.view.showSnackBar
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
 
@@ -49,19 +41,6 @@ class MainFragment : Fragment() {
 
     //Урок 6 создаем объект ресивера
     private val receiver = MainBroadcastReceiver()
-    private val movieDataPlay = ArrayList<Movie>()
-    private val loadResultsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val movieLoadList = intent.getParcelableArrayListExtra<MovieDTO>(MAIN_LOAD_EXTRA)
-
-            movieLoadList?.let {
-                it.forEach {n -> movieDataPlay.add(Movie(n.id!!,n.title!!,n.original_title!!,
-                    Calendar.getInstance().time, true, "8.1"))}
-                binding.loadingLayout.hideIf {true}
-            }
-            initAdapter(movieDataPlay, movieDataPlay)
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +49,6 @@ class MainFragment : Fragment() {
         context?.let {
             LocalBroadcastManager.getInstance(it)
                 .registerReceiver(receiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
-            LocalBroadcastManager.getInstance(it)
-                .registerReceiver(loadResultsReceiver, IntentFilter(MAIN_SERVICE_EXTRA))
         }
     }
 
@@ -87,24 +64,10 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // Инициализация данных
         initRecycler()
-        //initViewModel()
-        // Урок 6. Переведите хотя бы один экран своего приложения на использование
-        // связки «сервис + BroadcastReceiver» для получения данных из интернета.
-        loadMovieByService()
+        initViewModel()
     }
 
-    // Урок 6. Переведите хотя бы один экран своего приложения на использование
-    // связки «сервис + BroadcastReceiver» для получения данных из интернета.
-    private fun loadMovieByService() {
-//        binding.mainView.visibility = View.GONE
-//        binding.loadingLayout.visibility = View.VISIBLE
-        context?.let {
-            it.startService(Intent(it, MainService::class.java))
-        }
-        adapterPlayNow.apply {
-            movieData=movieDataPlay
-        }
-    }
+
 
     private fun initRecycler() {
         with(binding){  // Создаем два списка
@@ -205,7 +168,6 @@ class MainFragment : Fragment() {
         //Не забываем снять подписку на события, когда они уже никому не нужны.
         context?.let {
             LocalBroadcastManager.getInstance(it).unregisterReceiver(receiver)
-            LocalBroadcastManager.getInstance(it).unregisterReceiver(loadResultsReceiver)
         }
         super.onDestroy()
     }
