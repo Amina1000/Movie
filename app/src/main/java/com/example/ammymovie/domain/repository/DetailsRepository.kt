@@ -1,6 +1,8 @@
 package com.example.ammymovie.domain.repository
 
-import okhttp3.Callback
+import com.example.ammymovie.domain.model.MovieDTO
+import retrofit2.Callback
+
 
 /**
  * homework com.example.ammymovie.domain.repository
@@ -9,5 +11,5 @@ import okhttp3.Callback
  * 23.07.2021
  */
 interface DetailsRepository {
-    fun getMovieDetailsFromServer(movieLink:Any,callback: Callback)
+    fun getMovieDetailsFromServer(movieId: Int, lan:String, callback: Callback<MovieDTO>)
 }

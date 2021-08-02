@@ -51,8 +51,8 @@ class DetailsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner) { initView(it) }
-        viewModel.getMovieFromRemoteSource(movieBundle.id)
+        viewModel.detailsLiveData.observe(viewLifecycleOwner) { initView(it) }
+        viewModel.getMovieFromRemoteSource(movieBundle.id,"ru-RU")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -90,7 +90,7 @@ class DetailsFragment : Fragment() {
                     loadingLayout?.hideIf { true }
                     mainView.showSnackBar(getString(R.string.error),
                         getString(R.string.reload),
-                        { viewModel.getMovieFromRemoteSource(movieBundle.id) })
+                        { viewModel.getMovieFromRemoteSource(movieBundle.id,"ru-Ru") })
                     mainView.hideKeyboard()
                 }
                 else -> mainView.showSnackBar("Не взлетел")

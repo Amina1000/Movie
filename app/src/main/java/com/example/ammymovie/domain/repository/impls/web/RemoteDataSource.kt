@@ -1,10 +1,12 @@
 package com.example.ammymovie.domain.repository.impls.web
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import com.example.ammymovie.BuildConfig
+import com.example.ammymovie.domain.api.MovieAPI
+import com.example.ammymovie.domain.model.MovieDTO
+import com.google.gson.GsonBuilder
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * homework com.example.ammymovie.domain.repository
@@ -13,14 +15,17 @@ import okhttp3.Request
  * 23.07.2021
  */
 
-@RequiresApi(Build.VERSION_CODES.N)
 class RemoteDataSource {
+    private val movieApi = Retrofit.Builder()
+        .baseUrl("https://api.themoviedb.org/3/")
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder().setLenient().create()
+            )
+        )
+        .build().create(MovieAPI::class.java)
 
-    fun getMovieDetails(requestLink: String, callback: Callback) {
-        val builder: Request.Builder = Request.Builder().apply {
-            url(requestLink)
-        }
-        OkHttpClient().newCall(builder.build()).enqueue(callback)
+    fun getMovieDetails(movieId: Int, lan:String, callback: Callback<MovieDTO>) {
+        movieApi.getMovie(movieId,BuildConfig.AMMY_API_KEY,lan).enqueue(callback)
     }
-
 }

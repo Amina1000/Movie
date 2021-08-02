@@ -1,6 +1,10 @@
 package com.example.ammymovie.domain.api
 
-import com.example.ammymovie.BuildConfig
+import com.example.ammymovie.domain.model.MovieDTO
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * homework com.example.ammymovie.domain.api
@@ -8,13 +12,12 @@ import com.example.ammymovie.BuildConfig
  * @author Amina
  * 23.07.2021
  */
-private const val apiKey = BuildConfig.AMMY_API_KEY
-private const val MAIN_LINK = "https://api.themoviedb.org/3/"
 
-fun getLink(movieLink: Any?, lan: String = "ru-RU"): String {
-    return when (movieLink) {
-        is Int -> MAIN_LINK + "movie/${movieLink}?api_key=${apiKey}&language=${lan}"
-        is String -> MAIN_LINK + "search/movie?api_key=${apiKey}&query=${movieLink}"
-        else -> MAIN_LINK + "movie/now_playing?api_key=${apiKey}&language=${lan}"
-    }
+interface MovieAPI {
+    @GET("movie/{id}")
+    fun getMovie(
+        @Path("id")movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") lan: String
+    ): Call<MovieDTO>
 }
