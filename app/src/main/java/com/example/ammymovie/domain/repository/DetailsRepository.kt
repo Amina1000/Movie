@@ -11,5 +11,5 @@ import retrofit2.Callback
  * 23.07.2021
  */
 interface DetailsRepository {
-    fun getMovieDetailsFromServer(movieId: Int, lan:String, callback: Callback<MovieDTO>)
+    fun getMovieDetailsFromServer(movieId: Int?, lan:String, callback: Callback<MovieDTO>)
 }

@@ -21,18 +21,17 @@
             android:layout_weight="5"
             android:text="@string/item_naming"
             android:textSize="@dimen/title_detail"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_favorite"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:clickable="true"
             android:layout_weight="1"
             android:background="@drawable/ic_baseline_favorite_border_16"
-            android:focusable="true">
-        </com.google.android.material.button.MaterialButton>
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
 
     <TextView
@@ -40,72 +39,90 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/item_naming"
-        android:textStyle="bold"
-        android:textSize="@dimen/title_size" />
+        android:textSize="@dimen/title_size"
+        android:textStyle="bold" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_view_come"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardBackgroundColor="@color/turquoise_700"
             android:layout_weight="1"
-            android:scaleType="fitStart"
-            app:srcCompat="@drawable/kompyutera" />
+            app:cardElevation="@dimen/card_elevation">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_view_come"
+                android:layout_width="@dimen/pic_width"
+                android:layout_height="@dimen/pic_height"
+                app:srcCompat="@drawable/kompyutera"
+                android:clickable="true"
+                android:scaleType="centerCrop"
+                android:focusable="true"/>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/genre"
-                android:text="@string/genre"
-                style="@style/detail" />
+                style="@style/detail"
+                android:text="@string/genre" />
+
             <TextView
                 android:id="@+id/duration"
-                android:text="@string/duration"
-                style="@style/detail" />
+                style="@style/detail"
+                android:text="@string/duration" />
+
             <TextView
                 android:id="@+id/rating_detail"
-                android:text="@string/rating"
-                style="@style/detail" />
+                style="@style/detail"
+                android:text="@string/rating" />
+
             <TextView
                 android:id="@+id/budget"
-                android:text="@string/budget"
-                style="@style/detail" />
+                style="@style/detail"
+                android:text="@string/budget" />
+
             <TextView
                 android:id="@+id/revenue"
+                style="@style/detail"
                 android:text="@string/revenue"
-                android:visibility="gone"
-                style="@style/detail" />
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/date_release"
-                android:text="@string/release_date"
-                style="@style/detail" />
+                style="@style/detail"
+                android:text="@string/release_date" />
 
         </LinearLayout>
     </LinearLayout>
+
     <FrameLayout
         android:id="@+id/loading_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
         android:visibility="gone"
         tools:visibility="visible">
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            />
     </FrameLayout>
+
     <TextView
         android:id="@+id/description"
-        android:text="@string/description"
-        style="@style/detail" />
+        style="@style/detail"
+        android:text="@string/description" />
 </LinearLayout>
 
 

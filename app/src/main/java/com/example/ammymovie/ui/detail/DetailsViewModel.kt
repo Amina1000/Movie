@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.repository.DetailsRepository
-import com.example.ammymovie.domain.repository.impls.DetailsRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.web.WebDetailsRepositoryImpl
 import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
 import com.example.ammymovie.ui.common.AppState
 import retrofit2.Call
@@ -24,10 +24,10 @@ import java.io.IOException
 @RequiresApi(Build.VERSION_CODES.N)
 class DetailsViewModel (
     val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val detailsRepositoryImpl: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource())
+    private val detailsRepositoryImpl: DetailsRepository = WebDetailsRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
 
-    fun getMovieFromRemoteSource(movieLink:Int, lan:String) {
+    fun getMovieFromRemoteSource(movieLink:Int?, lan:String) {
         detailsLiveData.value = AppState.Loading
         detailsRepositoryImpl.getMovieDetailsFromServer(movieLink,lan,callBack)
     }

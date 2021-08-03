@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentMainBinding
-import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.service.MainBroadcastReceiver
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.detail.DetailsFragment
-import com.example.ammymovie.view.hideIf
-import com.example.ammymovie.view.hideKeyboard
-import com.example.ammymovie.view.showIf
-import com.example.ammymovie.view.showSnackBar
+import com.example.ammymovie.utils.hideIf
+import com.example.ammymovie.utils.hideKeyboard
+import com.example.ammymovie.utils.showIf
+import com.example.ammymovie.utils.showSnackBar
 
 class MainFragment : Fragment() {
 
@@ -99,19 +99,32 @@ class MainFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
-        viewModel.getDataFromLocalSource()
+        viewModel.liveDataToObserve.observe(viewLifecycleOwner) { renderData(it) }
+        viewModel.getDataFromLocalSource("ru-Ru")
     }
 
     private fun renderData(appState: AppState) = with(binding){
         //Заполняем списки
         when (appState) {
-            is AppState.Success -> {
+            is AppState.SuccessPlay -> {
                 val movieDataPlay = appState.movieDataPlay
+                loadingLayout.hideIf {true}
+                // используем функцию расширения вместо setData
+                adapterPlayNow.also {
+                    it.movieData = movieDataPlay
+                    it.notifyDataSetChanged()
+                }
+                adapterPlayNow.setOnItemClickListener { openScreen(it) }
+            }
+            is AppState.SuccessCome -> {
                 val movieDataCome = appState.movieDataCome
                 loadingLayout.hideIf {true}
                 // используем функцию расширения вместо setData
-                initAdapter(movieDataPlay, movieDataCome)
+                adapterUpcoming.also {
+                    it.movieData = movieDataCome
+                    it.notifyDataSetChanged()
+                    adapterUpcoming.setOnItemClickListener { openScreen(it) }
+                }
             }
             is AppState.Loading -> {
                 loadingLayout.showIf {true}
@@ -120,30 +133,13 @@ class MainFragment : Fragment() {
                 loadingLayout.hideIf {true}
                 mainView.showSnackBar(getString(R.string.error)
                     ,getString(R.string.reload)
-                    ,{viewModel.getDataFromLocalSource()})
+                    ,{viewModel.getDataFromLocalSource("ru-RU")})
                 mainView.hideKeyboard()
             }else-> mainView.showSnackBar("Нет данных для загрузки")
         }
     }
 
-    private fun initAdapter(
-        movieDataPlay: List<Movie>,
-        movieDataCome: List<Movie>
-    ) {
-        adapterPlayNow.also {
-            it.movieData = movieDataPlay
-            it.notifyDataSetChanged()
-        }
-        adapterUpcoming.also {
-            it.movieData = movieDataCome
-            it.notifyDataSetChanged()
-        }
-        // реализация метода при помощи лямбда, it - объект типа Movie
-        adapterPlayNow.setOnItemClickListener { openScreen(it) }
-        adapterUpcoming.setOnItemClickListener { openScreen(it) }
-    }
-
-    private fun openScreen(movie: Movie) {
+    private fun openScreen(movie: MovieDTO) {
         val manager = activity?.supportFragmentManager
         manager?.let {
             manager.beginTransaction()

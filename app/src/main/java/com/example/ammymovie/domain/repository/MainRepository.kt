@@ -1,8 +1,9 @@
 package com.example.ammymovie.domain.repository
 
-import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.domain.model.MovieListDTO
+import retrofit2.Callback
 
 interface MainRepository {
-    fun getNowPlayingFromLocalStorage(): List<Movie>
-    fun getUpcomingFromLocalStorage(): List<Movie>
+    fun getNowPlayingFromLocalStorage(lan: String,callback: Callback<MovieListDTO>,page:Int)
+    fun getUpcomingFromLocalStorage(lan: String,callback: Callback<MovieListDTO>,page:Int)
 }

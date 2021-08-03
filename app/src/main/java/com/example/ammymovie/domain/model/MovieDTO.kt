@@ -15,6 +15,7 @@ data class MovieDTO(
     val original_title: String?,
     val release_date: String?,
     val popularity: Double?,
+    val poster_path:String?,
     val overview: String?,
     val duration: String?,
     val budget: Int?,
@@ -28,6 +29,7 @@ data class MovieDTO(
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int
     )
@@ -38,6 +40,7 @@ data class MovieDTO(
         parcel.writeString(original_title)
         parcel.writeString(release_date)
         parcel.writeValue(popularity)
+        parcel.writeString(poster_path)
         parcel.writeString(overview)
         parcel.writeString(duration)
         parcel.writeValue(budget)
@@ -58,3 +61,4 @@ data class MovieDTO(
         }
     }
 }
+fun getDefaultMovie() =  MovieDTO(550,"Фильм", "Movie","",5.2,"","","",4,6)

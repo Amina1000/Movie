@@ -10,13 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentDetailsBinding
-import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.model.getDefaultMovie
-import com.example.ammymovie.view.hideIf
-import com.example.ammymovie.view.showIf
 import com.example.ammymovie.ui.common.AppState
-import com.example.ammymovie.view.hideKeyboard
-import com.example.ammymovie.view.showSnackBar
+import com.example.ammymovie.utils.*
 
 class DetailsFragment : Fragment() {
 
@@ -25,7 +22,7 @@ class DetailsFragment : Fragment() {
         fun newInstance(bundle: Bundle) = DetailsFragment().apply { arguments = bundle }
     }
 
-    private lateinit var movieBundle: Movie
+    private lateinit var movieBundle: MovieDTO
     private lateinit var viewModel: DetailsViewModel
 
     private var _binding: FragmentDetailsBinding? = null
@@ -73,13 +70,14 @@ class DetailsFragment : Fragment() {
                             .showIf { movieDTO.revenue != null }
                         description.text = movieDTO.overview
                         dateRelease.text = movieDTO.release_date
+                        imageViewCome.loadImageFromResource(movieDTO.poster_path)
                         btnFavorite.setBackgroundResource(
-                            changeBackButton(movieBundle.favorite)
+                            changeBackButton(false)
                         )
                         btnFavorite.setOnClickListener {
-                            val favorite = !movieBundle.favorite
+                            val favorite = !true
                             binding.btnFavorite.setBackgroundResource(changeBackButton(favorite))
-                            movieBundle.favorite = favorite
+                            //movieBundle.favorite = favorite
                         }
                     }
                 }

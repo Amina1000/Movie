@@ -1,8 +1,7 @@
-package com.example.ammymovie.domain.repository.impls
+package com.example.ammymovie.domain.repository.impls.web
 
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.repository.DetailsRepository
-import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
 import retrofit2.Callback
 
 /**
@@ -12,14 +11,17 @@ import retrofit2.Callback
  * 23.07.2021
  */
 
-class DetailsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : DetailsRepository {
+class WebDetailsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : DetailsRepository {
 
     override fun getMovieDetailsFromServer(
-        movieId: Int,
+        movieId: Int?,
         lan: String,
         callback: Callback<MovieDTO>
     ) {
-        remoteDataSource.getMovieDetails(movieId, lan, callback)
+        movieId?.let {
+            remoteDataSource.getMovieDetails(it, lan, callback)
+        }
+
     }
 }
 
