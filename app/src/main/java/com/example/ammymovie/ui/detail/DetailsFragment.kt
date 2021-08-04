@@ -72,12 +72,12 @@ class DetailsFragment : Fragment() {
                         dateRelease.text = movieDTO.release_date
                         imageViewCome.loadImageFromResource(movieDTO.poster_path)
                         btnFavorite.setBackgroundResource(
-                            changeBackButton(false)
+                            changeBackButton(movieBundle.favorite)
                         )
                         btnFavorite.setOnClickListener {
-                            val favorite = !true
+                            val favorite = !movieBundle.favorite
                             binding.btnFavorite.setBackgroundResource(changeBackButton(favorite))
-                            //movieBundle.favorite = favorite
+                            movieBundle.favorite = favorite
                         }
                     }
                 }

@@ -19,7 +19,8 @@ data class MovieDTO(
     val overview: String?,
     val duration: String?,
     val budget: Int?,
-    val revenue: Int?
+    val revenue: Int?,
+    var favorite:Boolean = false
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
