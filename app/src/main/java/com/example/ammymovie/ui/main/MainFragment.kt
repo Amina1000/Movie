@@ -70,29 +70,33 @@ class MainFragment : Fragment() {
 
 
     private fun initRecycler() {
+        var itemDecoration: DividerItemDecoration
         with(binding){  // Создаем два списка
         isLandscape = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> {
                 recyclerPlaying.layoutManager = GridLayoutManager(context, NUM_COLUMN)
                 recyclerUpcoming.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                itemDecoration = dividerItemDecoration(R.drawable.separator_vertical,LinearLayoutManager.VERTICAL)
                 true
             }
-            else -> false
+            else -> {
+                itemDecoration = dividerItemDecoration(R.drawable.separator_horizontal,LinearLayoutManager.HORIZONTAL)
+                false
+            }
         }
             recyclerPlaying.adapter = adapterPlayNow
             recyclerUpcoming.adapter = adapterUpcoming
-            val itemDecoration = dividerItemDecoration()
             recyclerPlaying.addItemDecoration(itemDecoration)
             recyclerUpcoming.addItemDecoration(itemDecoration)
         }
 
     }
 
-    private fun dividerItemDecoration(): DividerItemDecoration {
+    private fun dividerItemDecoration(resId:Int,orientation: Int): DividerItemDecoration {
         // Добавим разделитель
-        val itemDecoration = DividerItemDecoration(requireContext(), LinearLayoutManager.HORIZONTAL)
+        val itemDecoration = DividerItemDecoration(requireContext(), orientation)
         itemDecoration.setDrawable(
-            ResourcesCompat.getDrawable(resources, R.drawable.separator, null)!!
+            ResourcesCompat.getDrawable(resources,resId, null)!!
         )
         return itemDecoration
     }

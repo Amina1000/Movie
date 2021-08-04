@@ -59,7 +59,7 @@
                 android:id="@+id/image_view_come"
                 android:layout_width="@dimen/pic_width"
                 android:layout_height="@dimen/pic_height"
-                app:srcCompat="@drawable/kompyutera"
+                app:srcCompat="@drawable/ic_baseline_local_movies_250"
                 android:clickable="true"
                 android:scaleType="centerCrop"
                 android:focusable="true"/>

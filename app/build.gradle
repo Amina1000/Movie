@@ -70,5 +70,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //Coin
+    implementation 'io.coil-kt:coil:0.11.0'
 
 }
