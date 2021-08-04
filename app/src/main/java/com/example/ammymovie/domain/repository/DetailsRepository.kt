@@ -1,6 +1,8 @@
 package com.example.ammymovie.domain.repository
 
 import com.example.ammymovie.domain.model.MovieDTO
+import retrofit2.Callback
+
 
 /**
  * homework com.example.ammymovie.domain.repository
@@ -9,8 +11,5 @@ import com.example.ammymovie.domain.model.MovieDTO
  * 23.07.2021
  */
 interface DetailsRepository {
-    fun getMovieDetailsFromServer(movieLink:Any,listener: MovieLoaderListener)
+    fun getMovieDetailsFromServer(movieId: Int?, lan:String, callback: Callback<MovieDTO>)
 }
-interface MovieLoaderListener {
-    fun onLoaded(movieDTO: MovieDTO)
-    fun onFailed(throwable: Throwable) }

@@ -10,15 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentDetailsBinding
-import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.model.getDefaultMovie
-import com.example.ammymovie.view.hideIf
-import com.example.ammymovie.view.showIf
 import com.example.ammymovie.ui.common.AppState
-import com.example.ammymovie.view.hideKeyboard
-import com.example.ammymovie.view.showSnackBar
-
-const val DETAILS_INTENT_FILTER = "DETAILS INTENT FILTER"
+import com.example.ammymovie.utils.*
 
 class DetailsFragment : Fragment() {
 
@@ -27,7 +22,7 @@ class DetailsFragment : Fragment() {
         fun newInstance(bundle: Bundle) = DetailsFragment().apply { arguments = bundle }
     }
 
-    private lateinit var movieBundle: Movie
+    private lateinit var movieBundle: MovieDTO
     private lateinit var viewModel: DetailsViewModel
 
     private var _binding: FragmentDetailsBinding? = null
@@ -53,8 +48,8 @@ class DetailsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner) { initView(it) }
-        viewModel.getMovieFromRemoteSource(movieBundle.id)
+        viewModel.detailsLiveData.observe(viewLifecycleOwner) { initView(it) }
+        viewModel.getMovieFromRemoteSource(movieBundle.id,"ru-RU")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -75,6 +70,7 @@ class DetailsFragment : Fragment() {
                             .showIf { movieDTO.revenue != null }
                         description.text = movieDTO.overview
                         dateRelease.text = movieDTO.release_date
+                        imageViewCome.loadImageFromResource(movieDTO.poster_path)
                         btnFavorite.setBackgroundResource(
                             changeBackButton(movieBundle.favorite)
                         )
@@ -92,7 +88,7 @@ class DetailsFragment : Fragment() {
                     loadingLayout?.hideIf { true }
                     mainView.showSnackBar(getString(R.string.error),
                         getString(R.string.reload),
-                        { viewModel.getMovieFromRemoteSource(movieBundle.id) })
+                        { viewModel.getMovieFromRemoteSource(movieBundle.id,"ru-Ru") })
                     mainView.hideKeyboard()
                 }
                 else -> mainView.showSnackBar("Не взлетел")

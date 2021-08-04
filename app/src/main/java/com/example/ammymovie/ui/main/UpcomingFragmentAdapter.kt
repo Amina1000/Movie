@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.databinding.ItemUpcomingBinding
 import com.example.ammymovie.domain.model.Movie
+import com.example.ammymovie.domain.model.MovieDTO
+import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.utils.format
+import com.example.ammymovie.utils.loadImageFromResource
 
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 
     //Адаптер для второго списка
-    internal var movieData: List<Movie> = emptyList()
+    internal var movieData: MovieListDTO = MovieListDTO(ArrayList())
     private lateinit var binding: ItemUpcomingBinding
     //второй способ реализации слуштеля, через функциональный интерфейс
     private var itemClickListener: OnItemClickListener? = null
@@ -23,16 +26,16 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movieData[position])
+        holder.bind(movieData.results!![position])
     }
 
     override fun getItemCount(): Int {
-        return movieData.size
+        return movieData.results!!.size
     }
 
     // Интерфейс для обработки нажатий, как в ListView
     fun interface OnItemClickListener {
-        fun onItemClick(movie: Movie)
+        fun onItemClick(movie: MovieDTO)
     }
 
     // Сеттер слушателя нажатий
@@ -42,17 +45,18 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieDTO) {
             with(binding){
                 //перепишем при помощи функции расширения
                 itemView.apply {
-                    titleUpcome.text = movie.name
+                    titleUpcome.text = movie.title
                     // меняем формат даты на DATE_TIME_FORMAT, и тип на string
-                    dateUpcome.text =movie.releaseDate.format()
-                    genreItem.text = movie.genre
+                    dateUpcome.text =movie.release_date
+                    genreItem.text = movie.budget.toString()
                     // вызовем по цепочке
                 }.also {
                     cardCome.setOnClickListener {itemClickListener?.onItemClick(movie)}
+                    imageViewCome.loadImageFromResource(movie.poster_path)
                     imageViewCome.setOnClickListener {itemClickListener?.onItemClick(movie)}
                 }
             }

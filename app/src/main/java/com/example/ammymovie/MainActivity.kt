@@ -1,5 +1,6 @@
 package com.example.ammymovie
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -24,28 +25,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         initNavigationMenu()
         when (savedInstanceState) {
-            null ->loadFragment(MainFragment.newInstance())
+            null -> loadFragment(MainFragment.newInstance())
         }
     }
 
     private fun initNavigationMenu() {
-        binding.navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.item_home -> {
-                    loadFragment(MainFragment.newInstance())
-                    true
+
+        when {
+            resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE -> {
+                binding.navigation?.setOnNavigationItemSelectedListener {
+                    when (it.itemId) {
+                        R.id.item_home -> {
+                            loadFragment(MainFragment.newInstance())
+                            true
+                        }
+                        R.id.item_favorites -> {
+                            loadFragment(MainFragment.newInstance())
+                            true
+                        }
+                        R.id.item_ratings -> {
+                            loadFragment(MainFragment.newInstance())
+                            true
+                        }
+                        else -> false
+                    }
                 }
-                R.id.item_favorites -> {
-                    loadFragment(MainFragment.newInstance())
-                    true
-                }
-                R.id.item_ratings -> {
-                    loadFragment(MainFragment.newInstance())
-                    true
-                }
-                else -> false
             }
         }
+
     }
 
     private fun loadFragment(fragment: Fragment) {

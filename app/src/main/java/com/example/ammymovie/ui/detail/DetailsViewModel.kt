@@ -6,10 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.repository.DetailsRepository
-import com.example.ammymovie.domain.repository.DetailsRepositoryImpl
-import com.example.ammymovie.domain.repository.MovieLoaderListener
-import com.example.ammymovie.domain.repository.RemoteDataSource
+import com.example.ammymovie.domain.repository.impls.web.WebDetailsRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
 import com.example.ammymovie.ui.common.AppState
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+import java.io.IOException
 
 /**
  * homework com.example.ammymovie.ui.ditail.viewmodel
@@ -19,26 +23,36 @@ import com.example.ammymovie.ui.common.AppState
  */
 @RequiresApi(Build.VERSION_CODES.N)
 class DetailsViewModel (
-    private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val detailsRepositoryImpl: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource())
+    val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
+    private val detailsRepositoryImpl: DetailsRepository = WebDetailsRepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
-    fun getLiveData() = detailsLiveData
 
-    fun getMovieFromRemoteSource(movieLink:Any) {
+    fun getMovieFromRemoteSource(movieLink:Int?, lan:String) {
         detailsLiveData.value = AppState.Loading
-        detailsRepositoryImpl.getMovieDetailsFromServer(movieLink,onLoadListener)
+        detailsRepositoryImpl.getMovieDetailsFromServer(movieLink,lan,callBack)
     }
 
-    private val onLoadListener=
-        object : MovieLoaderListener {
+    private val callBack = object : Callback<MovieDTO> {
 
-            override fun onLoaded(movieDTO: MovieDTO) {
-                detailsLiveData.postValue(AppState.SuccessDetails(movieDTO))
-            }
-
-            override fun onFailed(throwable: Throwable) {
-                detailsLiveData.postValue(AppState.Error(Throwable("Ошибка загрузки")))
-            }
+        @Throws(IOException::class)
+        override fun onResponse(call: Call<MovieDTO>, response: Response<MovieDTO>) {
+            val serverResponse: MovieDTO? = response.body()
+            detailsLiveData.postValue(
+                if (response.isSuccessful && serverResponse != null) {
+                    checkResponse(serverResponse)
+                } else {
+                    AppState.Error(Throwable("Ошибка загрузки"))
+                }
+            )
         }
+
+        override fun onFailure(call: Call<MovieDTO>, t: Throwable) {
+            detailsLiveData.postValue(AppState.Error(Throwable(t.message ?: "Ошибка загрузки")))
+        }
+
+        private fun checkResponse(serverResponse: MovieDTO): AppState {
+               return AppState.SuccessDetails(serverResponse)
+        }
+    }
 
 }

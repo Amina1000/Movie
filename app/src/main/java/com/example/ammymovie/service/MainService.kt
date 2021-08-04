@@ -6,7 +6,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.ammymovie.domain.api.getLink
+import com.example.ammymovie.BuildConfig
 import com.example.ammymovie.domain.model.MovieListDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -31,7 +31,8 @@ class MainService(name: String? = "test") : IntentService(name) {
     private val broadcastIntent = Intent(MAIN_SERVICE_EXTRA)
 
     override fun onHandleIntent(intent: Intent?) {
-        val requestLink = getLink(Any())
+
+        val requestLink = "https://api.themoviedb.org/3/movie/now_playing?api_key=${BuildConfig.AMMY_API_KEY}&language=ru-RU"
         loadListMovie(requestLink)
     }
 

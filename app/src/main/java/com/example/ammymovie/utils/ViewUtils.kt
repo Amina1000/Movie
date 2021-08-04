@@ -1,14 +1,11 @@
-package com.example.ammymovie.view
+package com.example.ammymovie.utils
 
 import android.content.Context
-import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
-import com.example.ammymovie.R
 import com.google.android.material.snackbar.Snackbar
-import java.util.*
+import com.squareup.picasso.Picasso
 
 /**
  * homework com.example.ammymovie.view
@@ -17,8 +14,12 @@ import java.util.*
  * 16.07.2021
  */
 //extension-функция, обработка изображения
-fun AppCompatImageView.createImageFromResource() {
-    setImageResource(R.drawable.cinematografico)
+fun AppCompatImageView.loadImageFromResource(posterPath:String?) {
+    val imageLink = StringBuilder("https://image.tmdb.org/t/p/w500").append(posterPath)
+    Picasso
+        .get()
+        .load(imageLink.toString())
+        .into(this)
 }
 //extension-функция для SnackBar
 //2.Напишите дополнительные extension-функции для SnackBar
