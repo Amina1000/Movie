@@ -13,11 +13,12 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
 
     // Адаптер для первого списка
     internal var movieData: MovieListDTO = MovieListDTO(ArrayList())
-    private lateinit var binding:ItemNowPlayingBinding
+    private lateinit var binding: ItemNowPlayingBinding
+
     //первый способ реализации слушателя. Через функцию высшего порядка
     private var onSomeItemClickListener: ((MovieDTO) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         binding = ItemNowPlayingBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding.root as View)
@@ -44,7 +45,7 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //перепишем при помощи функции расширения
         fun bind(movie: MovieDTO) {
-            with(binding){
+            with(binding) {
                 itemView.apply {
                     titlePlay.text = movie.title
                     rating.text = movie.popularity.toString()

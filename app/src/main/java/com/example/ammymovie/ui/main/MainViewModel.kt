@@ -2,6 +2,7 @@ package com.example.ammymovie.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.ammymovie.App.Companion.getMovieDao
 import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.domain.repository.MainRepository
 import com.example.ammymovie.domain.repository.impls.MainRepositoryImpl
@@ -14,7 +15,7 @@ import java.io.IOException
 
 class MainViewModel(
     val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    private val mainRepositoryImpl: MainRepository = MainRepositoryImpl(RemoteDataSource())
+    private val mainRepositoryImpl: MainRepository = MainRepositoryImpl(RemoteDataSource(),getMovieDao())
 ) : ViewModel() {
 
     private val callBackPlay = object : Callback<MovieListDTO> {

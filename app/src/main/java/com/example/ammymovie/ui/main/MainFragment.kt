@@ -67,8 +67,6 @@ class MainFragment : Fragment() {
         initViewModel()
     }
 
-
-
     private fun initRecycler() {
         var itemDecoration: DividerItemDecoration
         with(binding){  // Создаем два списка
@@ -149,7 +147,7 @@ class MainFragment : Fragment() {
             manager.beginTransaction()
                 .replace(R.id.container, DetailsFragment.newInstance(Bundle()
                     .apply {
-                        putParcelable(DetailsFragment.BUNDLE_EXTRA, movie)
+                        putParcelable("movie", movie)
                     })
                 )
                 .addToBackStack("")

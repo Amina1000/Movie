@@ -15,10 +15,10 @@ import com.example.ammymovie.domain.model.getDefaultMovie
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.utils.*
 
+private const val BUNDLE_EXTRA = "movie"
 class DetailsFragment : Fragment() {
 
     companion object {
-        const val BUNDLE_EXTRA = "movie"
         fun newInstance(bundle: Bundle) = DetailsFragment().apply { arguments = bundle }
     }
 
