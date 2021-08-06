@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.databinding.ItemUpcomingBinding
 import com.example.ammymovie.domain.model.MovieDTO
-import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.utils.loadImageFromResource
 
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 
     //Адаптер для второго списка
-    internal var movieData: MovieListDTO = MovieListDTO(ArrayList())
+    internal var movieListData = ArrayList<MovieDTO>()
     private lateinit var binding: ItemUpcomingBinding
 
     //второй способ реализации слуштеля, через функциональный интерфейс
@@ -25,11 +24,11 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movieData.results!![position])
+        holder.bind(movieListData[position])
     }
 
     override fun getItemCount(): Int {
-        return movieData.results!!.size
+        return movieListData.size
     }
 
     // Интерфейс для обработки нажатий, как в ListView

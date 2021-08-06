@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.databinding.ItemNowPlayingBinding
 import com.example.ammymovie.domain.model.MovieDTO
-import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.utils.loadImageFromResource
 
 class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter.ViewHolder>() {
 
     // Адаптер для первого списка
-    internal var movieData: MovieListDTO = MovieListDTO(ArrayList())
+    internal var movieList = ArrayList<MovieDTO>()
     private lateinit var binding: ItemNowPlayingBinding
 
     //первый способ реализации слушателя. Через функцию высшего порядка
@@ -26,11 +25,11 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movieData.results!![position])
+        holder.bind(movieList[position])
     }
 
     override fun getItemCount(): Int {
-        return movieData.results!!.size
+        return movieList.size
     }
 
     // Сеттер слушателя нажатий

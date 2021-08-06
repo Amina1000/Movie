@@ -28,14 +28,15 @@ import com.example.ammymovie.utils.showSnackBar
 class MainFragment : Fragment() {
 
     companion object {
-        const val NUM_COLUMN=2
+        const val NUM_COLUMN = 2
         fun newInstance() = MainFragment()
     }
+
     private lateinit var viewModel: MainViewModel
     private var _binding: FragmentMainBinding? = null
-    private val adapterPlayNow = NowPlayingFragmentAdapter()
-    private val adapterUpcoming = UpcomingFragmentAdapter()
-    private var isLandscape =false
+    private val playNowAdapter = NowPlayingFragmentAdapter()
+    private val upcomingAdapter = UpcomingFragmentAdapter()
+    private var isLandscape = false
     private val binding
         get() = _binding!!
 
@@ -69,32 +70,38 @@ class MainFragment : Fragment() {
 
     private fun initRecycler() {
         var itemDecoration: DividerItemDecoration
-        with(binding){  // Создаем два списка
-        isLandscape = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                recyclerPlaying.layoutManager = GridLayoutManager(context, NUM_COLUMN)
-                recyclerUpcoming.layoutManager = GridLayoutManager(context, NUM_COLUMN)
-                itemDecoration = dividerItemDecoration(R.drawable.separator_vertical,LinearLayoutManager.VERTICAL)
-                true
+        with(binding) {  // Создаем два списка
+            isLandscape = when (resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    recyclerPlaying.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                    recyclerUpcoming.layoutManager = GridLayoutManager(context, NUM_COLUMN)
+                    itemDecoration = dividerItemDecoration(
+                        R.drawable.separator_vertical,
+                        LinearLayoutManager.VERTICAL
+                    )
+                    true
+                }
+                else -> {
+                    itemDecoration = dividerItemDecoration(
+                        R.drawable.separator_horizontal,
+                        LinearLayoutManager.HORIZONTAL
+                    )
+                    false
+                }
             }
-            else -> {
-                itemDecoration = dividerItemDecoration(R.drawable.separator_horizontal,LinearLayoutManager.HORIZONTAL)
-                false
-            }
-        }
-            recyclerPlaying.adapter = adapterPlayNow
-            recyclerUpcoming.adapter = adapterUpcoming
+            recyclerPlaying.adapter = playNowAdapter
+            recyclerUpcoming.adapter = upcomingAdapter
             recyclerPlaying.addItemDecoration(itemDecoration)
             recyclerUpcoming.addItemDecoration(itemDecoration)
         }
 
     }
 
-    private fun dividerItemDecoration(resId:Int,orientation: Int): DividerItemDecoration {
+    private fun dividerItemDecoration(resId: Int, orientation: Int): DividerItemDecoration {
         // Добавим разделитель
         val itemDecoration = DividerItemDecoration(requireContext(), orientation)
         itemDecoration.setDrawable(
-            ResourcesCompat.getDrawable(resources,resId, null)!!
+            ResourcesCompat.getDrawable(resources, resId, null)!!
         )
         return itemDecoration
     }
@@ -105,59 +112,54 @@ class MainFragment : Fragment() {
         viewModel.getDataFromLocalSource("ru-Ru")
     }
 
-    private fun renderData(appState: AppState) = with(binding){
+    private fun renderData(appState: AppState) = with(binding) {
         //Заполняем списки
         when (appState) {
             is AppState.SuccessPlay -> {
-                val movieDataPlay = appState.movieDataPlay
-                loadingLayout.hideIf {true}
+                loadingLayout.hideIf { true }
                 // используем функцию расширения вместо setData
-                adapterPlayNow.also {
-                    it.movieData = movieDataPlay
-                    it.notifyDataSetChanged()
+                appState.movieDataPlay.results?.let {
+                    playNowAdapter.movieList = it
+                    playNowAdapter.notifyDataSetChanged()
+                    playNowAdapter.setOnItemClickListener { p -> openScreen(p) }
+
                 }
-                adapterPlayNow.setOnItemClickListener { openScreen(it) }
             }
             is AppState.SuccessCome -> {
-                val movieDataCome = appState.movieDataCome
-                loadingLayout.hideIf {true}
+                loadingLayout.hideIf { true }
                 // используем функцию расширения вместо setData
-                adapterUpcoming.also {
-                    it.movieData = movieDataCome
-                    it.notifyDataSetChanged()
-                    adapterUpcoming.setOnItemClickListener { openScreen(it) }
+                appState.movieDataCome.results?.let {
+                    upcomingAdapter.movieListData = it
+                    upcomingAdapter.notifyDataSetChanged()
+                    upcomingAdapter.setOnItemClickListener { u -> openScreen(u) }
                 }
             }
             is AppState.Loading -> {
-                loadingLayout.showIf {true}
+                loadingLayout.showIf { true }
             }
             is AppState.Error -> {
-                loadingLayout.hideIf {true}
-                mainView.showSnackBar(getString(R.string.error)
-                    ,getString(R.string.reload)
-                    ,{viewModel.getDataFromLocalSource("ru-RU")})
+                loadingLayout.hideIf { true }
+                mainView.showSnackBar(getString(R.string.error),
+                    getString(R.string.reload),
+                    { viewModel.getDataFromLocalSource("ru-RU") })
                 mainView.hideKeyboard()
-            }else-> mainView.showSnackBar("Нет данных для загрузки")
+            }
+            else -> mainView.showSnackBar("Нет данных для загрузки")
         }
     }
 
     private fun openScreen(movie: MovieDTO) {
-        val manager = activity?.supportFragmentManager
-        manager?.let {
-            manager.beginTransaction()
-                .replace(R.id.container, DetailsFragment.newInstance(Bundle()
-                    .apply {
-                        putParcelable("movie", movie)
-                    })
-                )
-                .addToBackStack("")
-                .commitAllowingStateLoss()
-        }
+        activity?.supportFragmentManager?.beginTransaction()?.replace(
+            R.id.container, DetailsFragment.newInstance(Bundle()
+                .apply {
+                    putParcelable("movie", movie)
+                })
+        )?.addToBackStack("")?.commitAllowingStateLoss()
     }
 
     override fun onDestroyView() {
         _binding = null
-        adapterPlayNow.removeListener()
+        playNowAdapter.removeListener()
         super.onDestroyView()
     }
 

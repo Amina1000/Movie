@@ -1,6 +1,5 @@
 package com.example.ammymovie.ui.common
 
-import com.example.ammymovie.domain.model.Movie
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.model.MovieListDTO
 

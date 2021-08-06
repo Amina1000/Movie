@@ -9,6 +9,7 @@ import android.os.Parcelable
  * @author Amina
  * 21.07.2021
  */
+
 data class MovieDTO(
     val id:Int?,
     val title: String?,
@@ -20,8 +21,11 @@ data class MovieDTO(
     val duration: String?,
     val budget: Int?,
     val revenue: Int?,
-    var favorite:Boolean = false
+    var favorite:Boolean=false,
+    var section:Int=0
+
 ):Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
@@ -62,4 +66,3 @@ data class MovieDTO(
         }
     }
 }
-fun getDefaultMovie() =  MovieDTO(550,"Фильм", "Movie","",5.2,"","","",4,6)

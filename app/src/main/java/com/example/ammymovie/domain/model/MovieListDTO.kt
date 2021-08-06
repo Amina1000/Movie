@@ -9,9 +9,8 @@ import android.os.Parcelable
  * @author Amina
  * 29.07.2021
  */
-class MovieListDTO(val results: ArrayList<MovieDTO>?): Parcelable {
-    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(MovieDTO)) {
-    }
+class MovieListDTO(var results: ArrayList<MovieDTO>?): Parcelable {
+    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(MovieDTO))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeTypedList(results)
@@ -30,5 +29,7 @@ class MovieListDTO(val results: ArrayList<MovieDTO>?): Parcelable {
             return arrayOfNulls(size)
         }
     }
-
+    fun isNotEmpty():Boolean{
+        return this.results?.isNotEmpty()?:false
+    }
 }

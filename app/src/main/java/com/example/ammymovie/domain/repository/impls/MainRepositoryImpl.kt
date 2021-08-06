@@ -1,29 +1,48 @@
 package com.example.ammymovie.domain.repository.impls
 
-import com.example.ammymovie.domain.model.MovieDTO
+import android.os.Handler
 import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.domain.repository.MainRepository
 import com.example.ammymovie.domain.repository.impls.room.MovieRepoDao
-import com.example.ammymovie.domain.repository.impls.room.RoomMainRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.room.RoomMainRepository
 import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
-import com.example.ammymovie.domain.repository.impls.web.WebMainRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.web.WebMainRepository
 import retrofit2.Callback
 
-class MainRepositoryImpl(remoteDataSource: RemoteDataSource,localDataSource: MovieRepoDao) : MainRepository {
+class MainRepositoryImpl(
+    remoteDataSource: RemoteDataSource,
+    localDataSource: MovieRepoDao,
+    handler: Handler
+) : MainRepository {
 
-    private val webRepo = WebMainRepositoryImpl(remoteDataSource)
-    private val roomRepo = RoomMainRepositoryImpl(localDataSource)
+    private val webRepo = WebMainRepository(remoteDataSource)
+    private val roomRepo = RoomMainRepository(localDataSource, handler)
 
-    override fun getNowPlayingFromLocalStorage(lan: String, callback: Callback<MovieListDTO>,page:Int) {
-        webRepo.getNowPlayingFromLocalStorage(lan, callback,1)
-
+    override fun getNowPlayingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit) {
+        roomRepo.getNowPlayingFromLocalStorage {
+            if (it.isNotEmpty()) {
+                onSuccess(it)
+            }
+        }
     }
 
-    override fun getUpcomingFromLocalStorage(lan: String, callback: Callback<MovieListDTO>,page:Int) {
-        webRepo.getUpcomingFromLocalStorage(lan, callback,2)
+    override fun getUpcomingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit) {
+        roomRepo.getUpcomingFromLocalStorage {
+            if (it.isNotEmpty()) {
+                onSuccess(it)
+            }
+        }
     }
 
-    override fun saveEntity(movieDTO: MovieDTO) {
-        TODO("Not yet implemented")
+    override fun getNowPlayingFromServer(lan: String, callback: Callback<MovieListDTO>, page: Int) {
+        webRepo.getNowPlayingFromServer(lan, callback, page)
+    }
+
+    override fun getUpcomingFromServer(lan: String, callback: Callback<MovieListDTO>, page: Int) {
+        webRepo.getUpcomingFromServer(lan, callback, page)
+    }
+
+    override fun saveEntity(movieListDTO: MovieListDTO) {
+        roomRepo.saveEntity(movieListDTO)
     }
 }

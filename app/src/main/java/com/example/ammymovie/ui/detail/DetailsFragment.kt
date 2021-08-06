@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentDetailsBinding
 import com.example.ammymovie.domain.model.MovieDTO
-import com.example.ammymovie.domain.model.getDefaultMovie
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.utils.*
 
@@ -22,7 +21,9 @@ class DetailsFragment : Fragment() {
         fun newInstance(bundle: Bundle) = DetailsFragment().apply { arguments = bundle }
     }
 
-    private lateinit var movieBundle: MovieDTO
+    private val movieBundle:MovieDTO? by lazy{
+        arguments?.getParcelable(BUNDLE_EXTRA)
+    }
     private lateinit var viewModel: DetailsViewModel
 
     private var _binding: FragmentDetailsBinding? = null
@@ -40,7 +41,6 @@ class DetailsFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieBundle = arguments?.getParcelable(BUNDLE_EXTRA) ?: getDefaultMovie()
         binding.mainView.visibility = View.GONE
         initViewModel()
     }
@@ -49,7 +49,10 @@ class DetailsFragment : Fragment() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
         viewModel.detailsLiveData.observe(viewLifecycleOwner) { initView(it) }
-        viewModel.getMovieFromRemoteSource(movieBundle.id,"ru-RU")
+        movieBundle?.let{
+            viewModel.getMovieFromRemoteSource(it.id,"ru-RU")
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -72,12 +75,12 @@ class DetailsFragment : Fragment() {
                         dateRelease.text = movieDTO.release_date
                         imageViewCome.loadImageFromResource(movieDTO.poster_path)
                         btnFavorite.setBackgroundResource(
-                            changeBackButton(movieBundle.favorite)
+                            changeBackButton(movieDTO.favorite)
                         )
                         btnFavorite.setOnClickListener {
-                            val favorite = !movieBundle.favorite
+                            val favorite = !movieDTO.favorite
                             binding.btnFavorite.setBackgroundResource(changeBackButton(favorite))
-                            movieBundle.favorite = favorite
+                            movieDTO.favorite = favorite
                         }
                     }
                 }
@@ -88,7 +91,7 @@ class DetailsFragment : Fragment() {
                     loadingLayout?.hideIf { true }
                     mainView.showSnackBar(getString(R.string.error),
                         getString(R.string.reload),
-                        { viewModel.getMovieFromRemoteSource(movieBundle.id,"ru-Ru") })
+                        { viewModel.getMovieFromRemoteSource(movieBundle?.id,"ru-Ru") })
                     mainView.hideKeyboard()
                 }
                 else -> mainView.showSnackBar("Не взлетел")
@@ -96,10 +99,9 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun changeBackButton(favorite: Boolean) = when {
-        favorite -> R.drawable.ic_baseline_favorite_16
-        else -> R.drawable.ic_baseline_favorite_border_16
-    }
+    private fun changeBackButton(favorite: Boolean) =
+        if(favorite) R.drawable.ic_baseline_favorite_16
+        else R.drawable.ic_baseline_favorite_border_16
 
     override fun onDestroyView() {
         super.onDestroyView()
