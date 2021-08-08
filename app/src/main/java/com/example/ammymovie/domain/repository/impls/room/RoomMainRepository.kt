@@ -9,17 +9,17 @@ import com.example.ammymovie.utils.convertMovieListDTOMovieEntity
 class RoomMainRepository(private val dao: MovieRepoDao, private val handler: Handler) {
 
 
-    fun getNowPlayingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit) {
+    fun getNowPlayingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
         Thread {
-            val repos = convertMovieEntityToMovie(dao.all(MovieSection.PLAY.section))
+            val repos = convertMovieEntityToMovie(dao.all(MovieSection.PLAY.section,adultAdded))
             handler.post { onSuccess(repos) }
         }.start()
 
 
     }
-    fun getUpcomingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit) {
+    fun getUpcomingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
         Thread {
-            val repos = convertMovieEntityToMovie(dao.all(MovieSection.UPCOMING.section))
+            val repos = convertMovieEntityToMovie(dao.all(MovieSection.UPCOMING.section,adultAdded))
             handler.post { onSuccess(repos) }
         }.start()
     }

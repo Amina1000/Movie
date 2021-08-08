@@ -1,9 +1,11 @@
 package com.example.ammymovie.ui.main
 
+import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
 import com.example.ammymovie.App.Companion.getMovieDao
 import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.domain.model.MovieSection
@@ -17,15 +19,12 @@ import retrofit2.Response
 import java.io.IOException
 
 class MainViewModel(
-
-    val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    private val mainRepositoryImpl: MainRepository = MainRepositoryImpl(
-        RemoteDataSource(),
-        getMovieDao(),
-        Handler(Looper.getMainLooper())
-    )
+    app: Application,
+    private val mainRepositoryImpl: MainRepository
 ) : ViewModel() {
-
+    val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
+    private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(app)
+    private var adultAdded = !preferenceManager.getBoolean("adultClick", true)
     private fun callBack(movieSection: MovieSection): Callback<MovieListDTO> {
         return object : Callback<MovieListDTO> {
 
@@ -56,22 +55,21 @@ class MainViewModel(
     fun getDataFromLocalSource(lan: String) {
         liveDataToObserve.value = AppState.Loading
         with(mainRepositoryImpl) {
+            getNowPlayingFromServer(lan, callBack(MovieSection.PLAY), 1, adultAdded)
+            getUpcomingFromServer(lan, callBack(MovieSection.UPCOMING), 2, adultAdded)
+            getNowPlayingFromLocalStorage(
+                { repos ->
+                    if (repos.isNotEmpty()) {
+                        liveDataToObserve.postValue(AppState.SuccessPlay(repos))
+                    }
+                }, adultAdded
+            )
 
-            getNowPlayingFromLocalStorage { repos ->
-                if (repos.isNotEmpty()) {
-                    liveDataToObserve.postValue(AppState.SuccessPlay(repos))
-                } else {
-                    getNowPlayingFromServer(lan, callBack(MovieSection.PLAY), 1)
-                }
-            }
-
-            getUpcomingFromLocalStorage { repos ->
+            getUpcomingFromLocalStorage({ repos ->
                 if (repos.isNotEmpty()) {
                     liveDataToObserve.postValue(AppState.SuccessCome(repos))
-                } else {
-                    getUpcomingFromServer(lan, callBack(MovieSection.UPCOMING), 2)
                 }
-            }
+            }, adultAdded)
         }
     }
 

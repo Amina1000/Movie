@@ -18,28 +18,28 @@ class MainRepositoryImpl(
     private val webRepo = WebMainRepository(remoteDataSource)
     private val roomRepo = RoomMainRepository(localDataSource, handler)
 
-    override fun getNowPlayingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit) {
-        roomRepo.getNowPlayingFromLocalStorage {
+    override fun getNowPlayingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
+        roomRepo.getNowPlayingFromLocalStorage({
             if (it.isNotEmpty()) {
                 onSuccess(it)
             }
-        }
+        },adultAdded)
     }
 
-    override fun getUpcomingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit) {
-        roomRepo.getUpcomingFromLocalStorage {
+    override fun getUpcomingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
+        roomRepo.getUpcomingFromLocalStorage ({
             if (it.isNotEmpty()) {
                 onSuccess(it)
             }
-        }
+        },adultAdded)
     }
 
-    override fun getNowPlayingFromServer(lan: String, callback: Callback<MovieListDTO>, page: Int) {
-        webRepo.getNowPlayingFromServer(lan, callback, page)
+    override fun getNowPlayingFromServer(lan: String, callback: Callback<MovieListDTO>, page: Int,adultAdded:Boolean) {
+        webRepo.getNowPlayingFromServer(lan, callback, page,adultAdded)
     }
 
-    override fun getUpcomingFromServer(lan: String, callback: Callback<MovieListDTO>, page: Int) {
-        webRepo.getUpcomingFromServer(lan, callback, page)
+    override fun getUpcomingFromServer(lan: String, callback: Callback<MovieListDTO>, page: Int,adultAdded:Boolean) {
+        webRepo.getUpcomingFromServer(lan, callback, page,adultAdded)
     }
 
     override fun saveEntity(movieListDTO: MovieListDTO) {

@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,7 +32,7 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels { MainViewModelFactory(requireActivity().application) }
     private var _binding: FragmentMainBinding? = null
     private val playNowAdapter = NowPlayingFragmentAdapter()
     private val upcomingAdapter = UpcomingFragmentAdapter()
@@ -107,7 +107,6 @@ class MainFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.liveDataToObserve.observe(viewLifecycleOwner) { renderData(it) }
         viewModel.getDataFromLocalSource("ru-Ru")
     }
