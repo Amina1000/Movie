@@ -3,6 +3,7 @@ package com.example.ammymovie
 import android.app.Application
 import androidx.room.Room
 import com.example.ammymovie.domain.repository.impls.room.MovieDatabase
+import com.example.ammymovie.domain.repository.impls.room.MovieEntityRepoRoomDto
 import com.example.ammymovie.domain.repository.impls.room.MovieRepoDao
 
 /**
@@ -33,6 +34,7 @@ class App: Application() {
                             appInstance!!.applicationContext,
                             MovieDatabase::class.java,
                             DB_NAME)
+                            .addMigrations(MovieDatabase.MIGRATION_1_2)
                             .allowMainThreadQueries()
                             .build()
                     }

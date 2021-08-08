@@ -47,13 +47,13 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
             with(binding) {
                 itemView.apply {
                     titlePlay.text = movie.title
-                    rating.text = movie.popularity.toString()
+                    rating.text = movie.voteAverage.toString()
                     // меняем формат даты на DATE_TIME_FORMAT, и тип на string
-                    datePlay.text = movie.release_date
+                    datePlay.text = movie.releaseDate
                     cardPlay.setOnClickListener {
                         onSomeItemClickListener?.invoke(movie)
                     }
-                    imageViewPlay.loadImageFromResource(movie.poster_path)
+                    imageViewPlay.loadImageFromResource(movie.posterPath)
                     imageViewPlay.setOnClickListener {
                         onSomeItemClickListener?.invoke(movie)
                     }

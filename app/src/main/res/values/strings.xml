@@ -1,24 +1,20 @@
 <resources>
-    <string name="app_name">Find your movie</string>
-    <string name="temperature_label">Температура</string>
-    <string name="feels_like_label">Ощущается как</string>
-    <string name="city_coordinates">lt/ln: %s, %s"</string>
-    <string name="upcoming">Upcoming</string>
-    <string name="now_playing">Now playing</string>
-    <string name="item_naming">Naming</string>
-    <string name="release_date">Release date</string>
-    <string name="rating">rating</string>
-    <string name="rec_view_play">Now Playing</string>
-    <string name="search_menu_item">search</string>
-    <string name="genre">Genre</string>
-    <string name="duration">Duration</string>
-    <string name="budget">Budget</string>
-    <string name="revenue">Revenue</string>
-    <string name="description">Description</string>
-    <string name="res_view_come">Upcoming</string>
-    <string name = "error">Error</string>
-    <string name = "reload">Reload</string>
-    <string name="home">Home</string>
-    <string name="favorite">Favorite</string>
-    <string name="ratings">Ratings</string>
+    <string name="app_name" translatable="false">Movie Collection</string>
+    <string name="upcoming" translatable="false">Upcoming</string>
+    <string name="now_playing" translatable="false">Now playing</string>
+    <string name="item_naming" translatable="false">Naming</string>
+    <string name="release_date" translatable="false">Release date</string>
+    <string name="rating" translatable="false">rating</string>
+    <string name="rec_view_play" translatable="false">Now Playing</string>
+    <string name="search_menu_item" translatable="false">search</string>
+    <string name="genre" translatable="false">Genre</string>
+    <string name="duration" translatable="false">Duration</string>
+    <string name="budget" translatable="false">Budget</string>
+    <string name="revenue" translatable="false">Revenue</string>
+    <string name="description" translatable="false">Description</string>
+    <string name = "error" translatable="false">Error</string>
+    <string name = "reload" translatable="false">Reload</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="favorite" translatable="false">Favorite</string>
+    <string name="ratings" translatable="false">Ratings</string>
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Коллекция фильмов</string>
+    <string name="upcoming" translatable="false">Новинки</string>
+    <string name="now_playing" translatable="false">Сейчас смотрят</string>
+    <string name="item_naming" translatable="false">Заголовок</string>
+    <string name="release_date" translatable="false">Дата релиза</string>
+    <string name="rating" translatable="false">Рейтинг</string>
+    <string name="rec_view_play" translatable="false">Сейчас смотрят</string>
+    <string name="search_menu_item" translatable="false">Поиск</string>
+    <string name="genre" translatable="false">Жанр</string>
+    <string name="budget" translatable="false">Бюджет</string>
+    <string name="revenue" translatable="false">Сборы</string>
+    <string name="description" translatable="false">Описание</string>
+    <string name="duration" translatable="false">Продолжительность</string>
+    <string name="error" translatable="false">Ошибка</string>
+    <string name="reload" translatable="false">Загрузка</string>
+    <string name="home" translatable="false">Главная</string>
+    <string name="favorite" translatable="false">Избранное</string>
+    <string name="ratings" translatable="false">Популярное</string>
+</resources>

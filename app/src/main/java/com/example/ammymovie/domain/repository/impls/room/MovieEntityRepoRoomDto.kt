@@ -3,6 +3,7 @@ package com.example.ammymovie.domain.repository.impls.room
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.ammymovie.domain.model.MovieSection
+import com.google.gson.annotations.SerializedName
 
 /**
  * homework com.example.ammymovie.domain.repository.impls.room
@@ -13,15 +14,33 @@ import com.example.ammymovie.domain.model.MovieSection
 @Entity
 class MovieEntityRepoRoomDto(
     @PrimaryKey(autoGenerate = true)
-    val id:Int?,
-    val title: String?,
-    val original_title: String?,
-    val release_date: String?,
-    val popularity: Double?,
-    val poster_path:String?,
-    val overview: String?,
+    @SerializedName("adult")
+    val adult: Boolean = false,
+    @SerializedName("genre_ids")
+    val genreIds: String= "",
+    @SerializedName("id")
+    val id: Int = 0,
+    @SerializedName("original_language")
+    val originalLanguage: String = "",
+    @SerializedName("original_title")
+    val originalTitle: String = "",
+    @SerializedName("overview")
+    val overview: String = "",
+    @SerializedName("popularity")
+    val popularity: Double = 0.toDouble(),
+    @SerializedName("poster_path")
+    val posterPath: String = "",
+    @SerializedName("release_date")
+    val releaseDate: String = "",
+    @SerializedName("title")
+    val title: String = "",
+    @SerializedName("vote_average")
+    val voteAverage: Double = 0.toDouble(),
+    @SerializedName("vote_count")
+    val voteCount: Int = 0,
+    @SerializedName("duration")
     val duration: String?,
-    val budget: Int?,
+    @SerializedName("revenue")
     val revenue: Int?,
-    var favorite:Boolean,
-    val section:Int)
+    var favorite:Boolean=false,
+    var section:Int=0)

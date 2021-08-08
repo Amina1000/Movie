@@ -1,7 +1,8 @@
 package com.example.ammymovie.domain.model
 
-import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * homework com.example.ammymovie.domain.model
@@ -9,60 +10,36 @@ import android.os.Parcelable
  * @author Amina
  * 21.07.2021
  */
-
+@Parcelize
 data class MovieDTO(
-    val id:Int?,
-    val title: String?,
-    val original_title: String?,
-    val release_date: String?,
-    val popularity: Double?,
-    val poster_path:String?,
-    val overview: String?,
+    @SerializedName("adult")
+    val adult: Boolean = false,
+    @SerializedName("genre_ids")
+    val genreIds: List<Int> = listOf(),
+    @SerializedName("id")
+    val id: Int = 0,
+    @SerializedName("original_language")
+    val originalLanguage: String = "",
+    @SerializedName("original_title")
+    val originalTitle: String = "",
+    @SerializedName("overview")
+    val overview: String = "",
+    @SerializedName("popularity")
+    val popularity: Double = 0.toDouble(),
+    @SerializedName("poster_path")
+    val posterPath: String = "",
+    @SerializedName("release_date")
+    val releaseDate: String = "",
+    @SerializedName("title")
+    val title: String = "",
+    @SerializedName("vote_average")
+    val voteAverage: Double = 0.toDouble(),
+    @SerializedName("vote_count")
+    val voteCount: Int = 0,
+    @SerializedName("duration")
     val duration: String?,
-    val budget: Int?,
+    @SerializedName("revenue")
     val revenue: Int?,
     var favorite:Boolean=false,
     var section:Int=0
-
-):Parcelable {
-
-    constructor(parcel: Parcel) : this(
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readValue(Int::class.java.classLoader) as? Int
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(id)
-        parcel.writeString(title)
-        parcel.writeString(original_title)
-        parcel.writeString(release_date)
-        parcel.writeValue(popularity)
-        parcel.writeString(poster_path)
-        parcel.writeString(overview)
-        parcel.writeString(duration)
-        parcel.writeValue(budget)
-        parcel.writeValue(revenue)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<MovieDTO> {
-        override fun createFromParcel(parcel: Parcel): MovieDTO {
-            return MovieDTO(parcel)
-        }
-
-        override fun newArray(size: Int): Array<MovieDTO?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+): Parcelable

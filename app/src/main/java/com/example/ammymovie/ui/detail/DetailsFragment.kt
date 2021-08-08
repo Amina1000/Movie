@@ -64,16 +64,16 @@ class DetailsFragment : Fragment() {
                         loadingLayout?.hideIf { true }
                         mainView.visibility = View.VISIBLE
                         titleRus.text = movieDTO.title
-                        titleOriginal.text = movieDTO.original_title
-                        //genre.text = movieDTO.genre
+                        titleOriginal.text = movieDTO.originalTitle
+                       // genre.text = movieDTO.genreIds.toString()
                         duration.apply { text = movieDTO.duration }
                             .hideIf { movieDTO.duration == "" }
                         ratingDetail.text = movieDTO.popularity.toString()
                         revenue.apply { text = movieDTO.revenue.toString() }
                             .showIf { movieDTO.revenue != null }
                         description.text = movieDTO.overview
-                        dateRelease.text = movieDTO.release_date
-                        imageViewCome.loadImageFromResource(movieDTO.poster_path)
+                        dateRelease.text = movieDTO.releaseDate
+                        imageViewCome.loadImageFromResource(movieDTO.posterPath)
                         btnFavorite.setBackgroundResource(
                             changeBackButton(movieDTO.favorite)
                         )

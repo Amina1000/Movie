@@ -15,6 +15,7 @@ import kotlin.collections.ArrayList
  * 23.07.2021
  */
 const val DATE_TIME_FORMAT = "dd.MMM.yy"
+
 // добавила функцию расширения (extension-функцию) для класса Date.
 fun Date.format(): String =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -24,13 +25,48 @@ fun Date.format(): String =
         this.toString()
     }
 
-fun convertMovieEntityToMovie(entityList: List<MovieEntityRepoRoomDto>):MovieListDTO {
-    return MovieListDTO(ArrayList(entityList.map {MovieDTO(it.id,it.title,it.original_title,
-        it.release_date,it.popularity,it.poster_path,it.overview,it.duration,it.budget,it.revenue,it.favorite,it.section)}))
+fun convertMovieEntityToMovie(entityList: List<MovieEntityRepoRoomDto>): MovieListDTO {
+    return MovieListDTO(ArrayList(entityList.map {
+        MovieDTO(
+            it.adult,
+            listOf(0),
+            it.id,
+            it.originalLanguage,
+            it.originalTitle,
+            it.overview,
+            it.popularity,
+            it.posterPath,
+            it.releaseDate,
+            it.originalTitle,
+            it.voteAverage,
+            it.voteCount,
+            it.duration,
+            it.revenue,
+            it.favorite,
+            it.section
+        )
+    }))
 }
 
-fun convertMovieListDTOMovieEntity(movieListDTO:MovieListDTO): List<MovieEntityRepoRoomDto>{
-    return movieListDTO.results!!.map{MovieEntityRepoRoomDto(it.id,it.title,it.original_title,
-        it.release_date,it.popularity,it.poster_path
-        ,it.overview,it.duration,it.budget,it.revenue,it.favorite,it.section)  }
+fun convertMovieListDTOMovieEntity(movieListDTO: MovieListDTO): List<MovieEntityRepoRoomDto> {
+    return movieListDTO.results!!.map {
+        MovieEntityRepoRoomDto(
+            it.adult,
+            it.genreIds.toString(),
+            it.id,
+            it.originalLanguage,
+            it.originalTitle,
+            it.overview,
+            it.popularity,
+            it.posterPath,
+            it.releaseDate,
+            it.originalTitle,
+            it.voteAverage,
+            it.voteCount,
+            it.duration,
+            it.revenue,
+            it.favorite,
+            it.section
+        )
+    }
 }

@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/res_view_come"
+            android:text="@string/upcoming"
             android:textSize="@dimen/title_size"
             android:textStyle="bold|italic"/>
         <androidx.recyclerview.widget.RecyclerView

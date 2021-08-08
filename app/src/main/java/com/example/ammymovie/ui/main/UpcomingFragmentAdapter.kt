@@ -49,12 +49,12 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
                 itemView.apply {
                     titleUpcome.text = movie.title
                     // меняем формат даты на DATE_TIME_FORMAT, и тип на string
-                    dateUpcome.text = movie.release_date
-                    genreItem.text = movie.budget.toString()
+                    dateUpcome.text = movie.releaseDate
+                    genreItem.text = movie.popularity.toString()
                     // вызовем по цепочке
                 }.also {
                     cardCome.setOnClickListener { itemClickListener?.onItemClick(movie) }
-                    imageViewCome.loadImageFromResource(movie.poster_path)
+                    imageViewCome.loadImageFromResource(movie.posterPath)
                     imageViewCome.setOnClickListener { itemClickListener?.onItemClick(movie) }
                 }
             }
