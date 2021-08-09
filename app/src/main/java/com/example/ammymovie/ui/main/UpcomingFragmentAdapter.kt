@@ -11,7 +11,7 @@ import com.example.ammymovie.utils.loadImageFromResource
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 
     //Адаптер для второго списка
-    internal var movieListData = ArrayList<MovieDTO>()
+    internal var movieListData = listOf<MovieDTO>()
     private lateinit var binding: ItemUpcomingBinding
 
     //второй способ реализации слуштеля, через функциональный интерфейс

@@ -40,7 +40,6 @@ class App: Application() {
                     }
                 }
             }
-
             return db!!.movieRepoDao()
         }
     }

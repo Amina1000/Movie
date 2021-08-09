@@ -11,7 +11,7 @@ import com.example.ammymovie.utils.loadImageFromResource
 class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter.ViewHolder>() {
 
     // Адаптер для первого списка
-    internal var movieList = ArrayList<MovieDTO>()
+    internal var movieList = listOf<MovieDTO>()
     private lateinit var binding: ItemNowPlayingBinding
 
     //первый способ реализации слушателя. Через функцию высшего порядка

@@ -31,13 +31,11 @@ class MainViewModel(
             @Throws(IOException::class)
             override fun onResponse(call: Call<MovieListDTO>, response: Response<MovieListDTO>) {
                 val serverResponse: MovieListDTO? = response.body()
-                liveDataToObserve.postValue(
-                    if (response.isSuccessful && serverResponse != null) {
-                        checkResponse(serverResponse, movieSection)
-                    } else {
-                        AppState.Error(Throwable("Load error"))
-                    }
-                )
+                if (response.isSuccessful && serverResponse != null) {
+                    checkResponse(serverResponse, movieSection)
+                } else {
+                    AppState.Error(Throwable("Load error"))
+                }
             }
 
             override fun onFailure(call: Call<MovieListDTO>, t: Throwable) {
@@ -57,30 +55,17 @@ class MainViewModel(
         with(mainRepositoryImpl) {
             getNowPlayingFromServer(lan, callBack(MovieSection.PLAY), 1, adultAdded)
             getUpcomingFromServer(lan, callBack(MovieSection.UPCOMING), 2, adultAdded)
-            getNowPlayingFromLocalStorage(
+            getMovieFromLocalStorage(
                 { repos ->
-                    if (repos.isNotEmpty()) {
-                        liveDataToObserve.postValue(AppState.SuccessPlay(repos))
-                    }
-                }, adultAdded
+                    liveDataToObserve.postValue(AppState.Success(repos))
+                },
+                adultAdded
             )
-
-            getUpcomingFromLocalStorage({ repos ->
-                if (repos.isNotEmpty()) {
-                    liveDataToObserve.postValue(AppState.SuccessCome(repos))
-                }
-            }, adultAdded)
         }
     }
 
-    private fun checkResponse(serverResponse: MovieListDTO, movieSection: MovieSection): AppState {
+    private fun checkResponse(serverResponse: MovieListDTO, movieSection: MovieSection) {
         serverResponse.results?.forEach { it.section = movieSection.section }
         serverResponse.let { mainRepositoryImpl.saveEntity(it) }
-        if (movieSection == MovieSection.UPCOMING) {
-            return AppState.SuccessCome(serverResponse)
-        } else {
-            return AppState.SuccessPlay(serverResponse)
-        }
-
     }
 }

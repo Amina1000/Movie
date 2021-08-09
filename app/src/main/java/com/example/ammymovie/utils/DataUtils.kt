@@ -28,9 +28,9 @@ fun Date.format(): String =
 fun convertMovieEntityToMovie(entityList: List<MovieEntityRepoRoomDto>): MovieListDTO {
     return MovieListDTO(ArrayList(entityList.map {
         MovieDTO(
+            it.id,
             it.adult,
             listOf(0),
-            it.id,
             it.originalLanguage,
             it.originalTitle,
             it.overview,
@@ -51,9 +51,9 @@ fun convertMovieEntityToMovie(entityList: List<MovieEntityRepoRoomDto>): MovieLi
 fun convertMovieListDTOMovieEntity(movieListDTO: MovieListDTO): List<MovieEntityRepoRoomDto> {
     return movieListDTO.results!!.map {
         MovieEntityRepoRoomDto(
+            it.id,
             it.adult,
             it.genreIds.toString(),
-            it.id,
             it.originalLanguage,
             it.originalTitle,
             it.overview,

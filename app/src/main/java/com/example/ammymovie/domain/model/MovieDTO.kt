@@ -12,12 +12,12 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class MovieDTO(
+    @SerializedName("id")
+    val id: Int = 0,
     @SerializedName("adult")
     val adult: Boolean = false,
     @SerializedName("genre_ids")
     val genreIds: List<Int> = listOf(),
-    @SerializedName("id")
-    val id: Int = 0,
     @SerializedName("original_language")
     val originalLanguage: String = "",
     @SerializedName("original_title")

@@ -14,12 +14,12 @@ import com.google.gson.annotations.SerializedName
 @Entity
 class MovieEntityRepoRoomDto(
     @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
+    val id: Int = 0,
     @SerializedName("adult")
     val adult: Boolean = false,
     @SerializedName("genre_ids")
     val genreIds: String= "",
-    @SerializedName("id")
-    val id: Int = 0,
     @SerializedName("original_language")
     val originalLanguage: String = "",
     @SerializedName("original_title")

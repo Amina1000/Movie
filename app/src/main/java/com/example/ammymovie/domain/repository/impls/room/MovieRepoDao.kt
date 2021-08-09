@@ -11,13 +11,16 @@ import androidx.room.*
 @Dao
 interface MovieRepoDao {
 
-    @Query("SELECT * FROM MovieEntityRepoRoomDto WHERE section==:section AND adult==:adultAdded")
-    fun all(section:Int,adultAdded:Boolean): List<MovieEntityRepoRoomDto>
+    @Query("SELECT * FROM MovieEntityRepoRoomDto")
+    fun all(): List<MovieEntityRepoRoomDto>
+
+    @Query("SELECT * FROM MovieEntityRepoRoomDto WHERE adult==:adultAdded")
+    fun adult(adultAdded:Boolean): List<MovieEntityRepoRoomDto>
 
     @Query("SELECT * FROM MovieEntityRepoRoomDto WHERE id ==:id")
     fun getIdByData(id: Int): List<MovieEntityRepoRoomDto>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(entity: MovieEntityRepoRoomDto)
 
     @Update

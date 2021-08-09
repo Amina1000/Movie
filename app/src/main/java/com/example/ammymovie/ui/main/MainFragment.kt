@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentMainBinding
 import com.example.ammymovie.domain.model.MovieDTO
+import com.example.ammymovie.domain.model.MovieSection
 import com.example.ammymovie.service.MainBroadcastReceiver
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.detail.DetailsFragment
@@ -114,23 +115,20 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) = with(binding) {
         //Заполняем списки
         when (appState) {
-            is AppState.SuccessPlay -> {
+            is AppState.Success -> {
                 loadingLayout.hideIf { true }
                 // используем функцию расширения вместо setData
-                appState.movieDataPlay.results?.let {
-                    playNowAdapter.movieList = it
+                appState.movieDataList.results?.let {
+                    playNowAdapter.movieList = it.filter { movieDTO ->
+                        movieDTO.section == MovieSection.PLAY.section }
                     playNowAdapter.notifyDataSetChanged()
                     playNowAdapter.setOnItemClickListener { p -> openScreen(p) }
 
-                }
-            }
-            is AppState.SuccessCome -> {
-                loadingLayout.hideIf { true }
-                // используем функцию расширения вместо setData
-                appState.movieDataCome.results?.let {
-                    upcomingAdapter.movieListData = it
+                    upcomingAdapter.movieListData = it.filter { movieDTO ->
+                        movieDTO.section == MovieSection.UPCOMING.section }
                     upcomingAdapter.notifyDataSetChanged()
                     upcomingAdapter.setOnItemClickListener { u -> openScreen(u) }
+
                 }
             }
             is AppState.Loading -> {

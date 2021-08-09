@@ -18,16 +18,8 @@ class MainRepositoryImpl(
     private val webRepo = WebMainRepository(remoteDataSource)
     private val roomRepo = RoomMainRepository(localDataSource, handler)
 
-    override fun getNowPlayingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
-        roomRepo.getNowPlayingFromLocalStorage({
-            if (it.isNotEmpty()) {
-                onSuccess(it)
-            }
-        },adultAdded)
-    }
-
-    override fun getUpcomingFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
-        roomRepo.getUpcomingFromLocalStorage ({
+    override fun getMovieFromLocalStorage(onSuccess: (MovieListDTO) -> Unit,adultAdded:Boolean) {
+        roomRepo.getMovieFromLocalStorage({
             if (it.isNotEmpty()) {
                 onSuccess(it)
             }
