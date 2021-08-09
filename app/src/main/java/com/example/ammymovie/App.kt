@@ -35,7 +35,6 @@ class App: Application() {
                             MovieDatabase::class.java,
                             DB_NAME)
                             .addMigrations(MovieDatabase.MIGRATION_1_2)
-                            .allowMainThreadQueries()
                             .build()
                     }
                 }
