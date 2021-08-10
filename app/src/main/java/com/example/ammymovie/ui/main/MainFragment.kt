@@ -128,7 +128,6 @@ class MainFragment : Fragment() {
                         movieDTO.section == MovieSection.UPCOMING.section }
                     upcomingAdapter.notifyDataSetChanged()
                     upcomingAdapter.setOnItemClickListener { u -> openScreen(u) }
-
                 }
             }
             is AppState.Loading -> {

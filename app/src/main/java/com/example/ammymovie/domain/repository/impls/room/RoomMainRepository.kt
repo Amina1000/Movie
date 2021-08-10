@@ -10,7 +10,7 @@ class RoomMainRepository(private val dao: MovieRepoDao, private val handler: Han
 
     fun getMovieFromLocalStorage(onSuccess: (MovieListDTO) -> Unit, adultAdded: Boolean) {
         Thread {
-            val repos = if (adultAdded) {
+            val repos = if (!adultAdded) {
                 convertMovieEntityToMovie(dao.adult(adultAdded))
             } else {
                 convertMovieEntityToMovie(dao.all())
