@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top">
+        <TextView
+            android:id="@+id/title_rus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/item_naming"
+            android:textSize="@dimen/title_detail"
+            android:textStyle="bold"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:background="@drawable/ic_baseline_favorite_border_16"
+            android:focusable="true">
+        </com.google.android.material.button.MaterialButton>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title_original"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/item_naming"
+        android:textStyle="bold"
+        android:textSize="@dimen/title_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_view_come"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitStart"
+            app:srcCompat="@drawable/kompyutera" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/genre"
+                android:text="@string/genre"
+                style="@style/detail" />
+            <TextView
+                android:id="@+id/duration"
+                android:text="@string/duration"
+                style="@style/detail" />
+            <TextView
+                android:id="@+id/rating_detail"
+                android:text="@string/rating"
+                style="@style/detail" />
+            <TextView
+                android:id="@+id/budget"
+                android:text="@string/budget"
+                style="@style/detail" />
+            <TextView
+                android:id="@+id/revenue"
+                android:text="@string/revenue"
+                style="@style/detail" />
+            <TextView
+                android:id="@+id/date_release"
+                android:text="@string/release_date"
+                style="@style/detail" />
+            <TextView
+                android:id="@+id/description"
+                android:text="@string/description"
+                style="@style/detail"
+                android:layout_marginTop="@dimen/margin_desc"
+                android:minLines="5"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+

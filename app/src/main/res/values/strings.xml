@@ -6,8 +6,14 @@
     <string name="upcoming">Upcoming</string>
     <string name="now_playing">Now playing</string>
     <string name="item_naming">Naming</string>
-    <string name="release_date">release date</string>
+    <string name="release_date">Release date</string>
     <string name="rating">rating</string>
-    <string name="rec_view_play">Now Plaing</string>
+    <string name="rec_view_play">Now Playing</string>
     <string name="search_menu_item">search</string>
+    <string name="genre">Genre</string>
+    <string name="duration">Duration</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
+    <string name="description">Description</string>
+    <string name="res_view_come">Upcoming</string>
 </resources>
