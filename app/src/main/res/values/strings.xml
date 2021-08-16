@@ -17,6 +17,7 @@
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="ratings">Ratings</string>
+    <string name="popularity">Popularity</string>
     <!-- Preference Titles -->
     <string name="messages_header">Settings</string>
     <string name="sync_header">Content</string>

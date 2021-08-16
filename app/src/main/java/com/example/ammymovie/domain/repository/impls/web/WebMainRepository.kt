@@ -10,4 +10,7 @@ class WebMainRepository(private val remoteDataSource: RemoteDataSource){
     fun getUpcomingFromServer(lan: String, callback: Callback<MovieListDTO>, page:Int,adultAdded:Boolean) {
         remoteDataSource.getUpcomingList(lan, callback,page,adultAdded)
     }
+    fun getSearchingMovieServer(query: String, lan: String, callback: Callback<MovieListDTO>, page:Int,adultAdded:Boolean) {
+        remoteDataSource.getSearchingMovieServer(query, lan, callback,page,adultAdded)
+    }
 }
