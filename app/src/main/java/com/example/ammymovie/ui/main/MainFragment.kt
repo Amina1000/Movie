@@ -20,6 +20,7 @@ import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.model.MovieSection
 import com.example.ammymovie.service.MainBroadcastReceiver
 import com.example.ammymovie.ui.common.AppState
+import com.example.ammymovie.ui.common.MainViewModelFactory
 import com.example.ammymovie.ui.detail.DetailsFragment
 import com.example.ammymovie.utils.hideIf
 import com.example.ammymovie.utils.hideKeyboard

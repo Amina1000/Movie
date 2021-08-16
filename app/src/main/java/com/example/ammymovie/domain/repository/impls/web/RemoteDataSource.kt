@@ -50,9 +50,11 @@ class RemoteDataSource {
         movieListApi.getNowPlayMovie(BuildConfig.AMMY_API_KEY,lan,page,adultAdded).enqueue(callback)
     }
     fun getUpcomingList(lan:String, callback: Callback<MovieListDTO>,page: Int,adultAdded:Boolean) {
-        movieListApi.getNowPlayMovie(BuildConfig.AMMY_API_KEY,lan,page,adultAdded).enqueue(callback)
+        movieListApi.getUpcomingMovie(BuildConfig.AMMY_API_KEY,lan,page,adultAdded).enqueue(callback)
     }
-
+    fun getSearchingMovieServer(query: String, lan: String, callback: Callback<MovieListDTO>, page:Int,adultAdded:Boolean) {
+        movieListApi.getSearchingMovie(BuildConfig.AMMY_API_KEY,lan,page,query,adultAdded).enqueue(callback)
+    }
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(interceptor)

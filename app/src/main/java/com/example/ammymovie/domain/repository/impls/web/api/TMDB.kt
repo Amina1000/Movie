@@ -38,4 +38,13 @@ interface MovieListAPI {
         @Query("page") page: Int,
         @Query("include_adult") includeAdult: Boolean
     ): Call<MovieListDTO>
+
+    @GET("search/movie")
+    fun getSearchingMovie(
+        @Query("api_key") apiKey: String,
+        @Query("language") lan: String,
+        @Query("page") page: Int,
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean
+    ): Call<MovieListDTO>
 }

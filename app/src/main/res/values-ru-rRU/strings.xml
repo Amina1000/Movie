@@ -17,11 +17,13 @@
     <string name="reload">Загрузка</string>
     <string name="home">Главная</string>
     <string name="favorite" >Избранное</string>
-    <string name="ratings">Популярное</string>
+    <string name="ratings">Рейтинг</string>
+    <string name="popularity">Популярность</string>
     <string name="messages_header">Настройки</string>
     <string name="signature_title">Подпись</string>
     <string name="sync_header">Контент</string>
     <string name="attachment_title">Взрослый контент</string>
     <string name="attachment_summary_on">Спрятать контент для взрослых</string>
     <string name="attachment_summary_off">Показывать контент для взрослых</string>
+    <string name="settings_menu">Меню настроек</string>
 </resources>

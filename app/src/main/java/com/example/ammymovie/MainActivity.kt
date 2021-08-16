@@ -1,19 +1,20 @@
 package com.example.ammymovie
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.ammymovie.databinding.MainActivityBinding
 import com.example.ammymovie.ui.main.MainFragment
+import com.example.ammymovie.ui.search.SearchFragment
 import com.example.ammymovie.ui.settings.SettingsFragment
-import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,18 +69,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Здесь определяем меню приложения (активити)
         menuInflater.inflate(R.menu.main_menu, menu)
+        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu?.findItem(R.id.action_search) // поиск пункта меню поиска
         val searchText = searchItem?.actionView as SearchView // строка поиска
+        searchText.setSearchableInfo(manager.getSearchableInfo(componentName))
         searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            // реагирует на конец ввода поиска
-            override fun onQueryTextSubmit(query: String): Boolean {
-                Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchText.clearFocus()
+                searchText.setQuery("", false)
+                searchItem.collapseActionView()
+                val bundle = Bundle()
+                bundle.putString("search", query?.trim())
+                loadFragment(SearchFragment.newInstance(bundle))
                 return true
             }
 
-            // реагирует на нажатие каждой клавиши
-            override fun onQueryTextChange(newText: String): Boolean {
-                return true
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //TODO("Not yet implemented")
+                return false
             }
         })
         return true

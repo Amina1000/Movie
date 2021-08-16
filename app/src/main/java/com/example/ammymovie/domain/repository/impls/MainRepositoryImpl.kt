@@ -34,6 +34,16 @@ class MainRepositoryImpl(
         webRepo.getUpcomingFromServer(lan, callback, page,adultAdded)
     }
 
+    override fun getSearchingMovieServer(
+        query: String,
+        lan: String,
+        callback: Callback<MovieListDTO>,
+        page: Int,
+        adultAdded: Boolean
+    ) {
+        webRepo.getSearchingMovieServer(query, lan, callback,page,adultAdded)
+    }
+
     override fun saveEntity(movieListDTO: MovieListDTO) {
         roomRepo.saveEntity(movieListDTO)
     }
