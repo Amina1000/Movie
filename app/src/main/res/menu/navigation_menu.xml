@@ -15,5 +15,4 @@
             android:enabled="true"
             android:icon="@drawable/ic_baseline_graphic_eq_20"
             android:title="@string/ratings" />
-
 </menu>

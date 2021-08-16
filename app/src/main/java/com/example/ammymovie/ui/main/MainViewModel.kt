@@ -1,8 +1,14 @@
 package com.example.ammymovie.ui.main
 
+import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.preference.PreferenceManager
+import com.example.ammymovie.App.Companion.getMovieDao
 import com.example.ammymovie.domain.model.MovieListDTO
+import com.example.ammymovie.domain.model.MovieSection
 import com.example.ammymovie.domain.repository.MainRepository
 import com.example.ammymovie.domain.repository.impls.MainRepositoryImpl
 import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
@@ -13,57 +19,53 @@ import retrofit2.Response
 import java.io.IOException
 
 class MainViewModel(
-    val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    private val mainRepositoryImpl: MainRepository = MainRepositoryImpl(RemoteDataSource())
+    app: Application,
+    private val mainRepositoryImpl: MainRepository
 ) : ViewModel() {
+    val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
+    private val preferenceManager = PreferenceManager.getDefaultSharedPreferences(app)
+    private var adultAdded = !preferenceManager.getBoolean("adultClick", true)
+    private fun callBack(movieSection: MovieSection): Callback<MovieListDTO> {
+        return object : Callback<MovieListDTO> {
 
-    private val callBackPlay = object : Callback<MovieListDTO> {
-
-        @Throws(IOException::class)
-        override fun onResponse(call: Call<MovieListDTO>, response: Response<MovieListDTO>) {
-            val serverResponse: MovieListDTO? = response.body()
-            liveDataToObserve.postValue(
+            @Throws(IOException::class)
+            override fun onResponse(call: Call<MovieListDTO>, response: Response<MovieListDTO>) {
+                val serverResponse: MovieListDTO? = response.body()
                 if (response.isSuccessful && serverResponse != null) {
-                    checkResponse(serverResponse)
+                    checkResponse(serverResponse, movieSection)
                 } else {
-                    AppState.Error(Throwable("Ошибка загрузки"))
+                    AppState.Error(Throwable("Load error"))
                 }
-            )
-        }
+            }
 
-        override fun onFailure(call: Call<MovieListDTO>, t: Throwable) {
-            liveDataToObserve.postValue(AppState.Error(Throwable(t.message ?: "Ошибка загрузки")))
-        }
-
-        private fun checkResponse(serverResponse: MovieListDTO): AppState {
-            return AppState.SuccessPlay(serverResponse)
+            override fun onFailure(call: Call<MovieListDTO>, t: Throwable) {
+                liveDataToObserve.postValue(
+                    AppState.Error(
+                        Throwable(
+                            t.message ?: "Load error"
+                        )
+                    )
+                )
+            }
         }
     }
-    private val callBackCome = object : Callback<MovieListDTO> {
 
-        @Throws(IOException::class)
-        override fun onResponse(call: Call<MovieListDTO>, response: Response<MovieListDTO>) {
-            val serverResponse: MovieListDTO? = response.body()
-            liveDataToObserve.postValue(
-                if (response.isSuccessful && serverResponse != null) {
-                    checkResponse(serverResponse)
-                } else {
-                    AppState.Error(Throwable("Ошибка загрузки"))
-                }
-            )
-        }
-
-        override fun onFailure(call: Call<MovieListDTO>, t: Throwable) {
-            liveDataToObserve.postValue(AppState.Error(Throwable(t.message ?: "Ошибка загрузки")))
-        }
-
-        private fun checkResponse(serverResponse: MovieListDTO): AppState {
-            return AppState.SuccessCome(serverResponse)
-        }
-    }
-    fun getDataFromLocalSource(lan:String) {
+    fun getDataFromLocalSource(lan: String) {
         liveDataToObserve.value = AppState.Loading
-        mainRepositoryImpl.getNowPlayingFromLocalStorage(lan,callBackPlay,1)
-        mainRepositoryImpl.getUpcomingFromLocalStorage(lan,callBackCome,1)
+        with(mainRepositoryImpl) {
+            getNowPlayingFromServer(lan, callBack(MovieSection.PLAY), 1, adultAdded)
+            getUpcomingFromServer(lan, callBack(MovieSection.UPCOMING), 2, adultAdded)
+            getMovieFromLocalStorage(
+                { repos ->
+                    liveDataToObserve.postValue(AppState.Success(repos))
+                },
+                adultAdded
+            )
+        }
+    }
+
+    private fun checkResponse(serverResponse: MovieListDTO, movieSection: MovieSection) {
+        serverResponse.results?.forEach { it.section = movieSection.section }
+        serverResponse.let { mainRepositoryImpl.saveEntity(it) }
     }
 }

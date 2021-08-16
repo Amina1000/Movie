@@ -13,4 +13,7 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="pic_height">300dp</dimen>
     <dimen name="pic_width">200dp</dimen>
+    <dimen name="card_text_radius">10dp</dimen>
+    <dimen name="padding">10dp</dimen>
+    <dimen name="btn_favorite_land">70dp</dimen>
 </resources>

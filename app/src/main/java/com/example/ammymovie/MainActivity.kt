@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.ammymovie.databinding.MainActivityBinding
 import com.example.ammymovie.ui.main.MainFragment
+import com.example.ammymovie.ui.settings.SettingsFragment
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
@@ -66,8 +68,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // Здесь определяем меню приложения (активити)
         menuInflater.inflate(R.menu.main_menu, menu)
-        val search = menu?.findItem(R.id.action_search) // поиск пункта меню поиска
-        val searchText = search?.actionView as SearchView // строка поиска
+        val searchItem = menu?.findItem(R.id.action_search) // поиск пункта меню поиска
+        val searchText = searchItem?.actionView as SearchView // строка поиска
         searchText.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // реагирует на конец ввода поиска
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -81,6 +83,15 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_settings -> {
+                loadFragment(SettingsFragment())
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">Find your movie</string>
-    <string name="temperature_label">Температура</string>
-    <string name="feels_like_label">Ощущается как</string>
-    <string name="city_coordinates">lt/ln: %s, %s"</string>
+    <string name="app_name">Movie Collection</string>
     <string name="upcoming">Upcoming</string>
     <string name="now_playing">Now playing</string>
     <string name="item_naming">Naming</string>
@@ -15,10 +12,21 @@
     <string name="budget">Budget</string>
     <string name="revenue">Revenue</string>
     <string name="description">Description</string>
-    <string name="res_view_come">Upcoming</string>
-    <string name = "error">Error</string>
-    <string name = "reload">Reload</string>
+    <string name="error">Error</string>
+    <string name="reload">Reload</string>
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="ratings">Ratings</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Settings</string>
+    <string name="sync_header">Content</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+
+    <!-- Sync Preferences -->
+    <string name="attachment_title">Adult content</string>
+    <string name="attachment_summary_off">Show adult content</string>
+    <string name="attachment_summary_on">Hide adult content</string>
+    <string name="settings_menu">settings_menu</string>
 </resources>

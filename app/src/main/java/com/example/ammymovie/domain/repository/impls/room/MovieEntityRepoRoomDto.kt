@@ -1,23 +1,25 @@
-package com.example.ammymovie.domain.model
+package com.example.ammymovie.domain.repository.impls.room
 
-import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.ammymovie.domain.model.MovieSection
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
 /**
- * homework com.example.ammymovie.domain.model
+ * homework com.example.ammymovie.domain.repository.impls.room
  *
  * @author Amina
- * 21.07.2021
+ * 05.08.2021
  */
-@Parcelize
-data class MovieDTO(
+@Entity
+class MovieEntityRepoRoomDto(
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     val id: Int = 0,
     @SerializedName("adult")
     val adult: Boolean = false,
     @SerializedName("genre_ids")
-    val genreIds: List<Int> = listOf(),
+    val genreIds: String= "",
     @SerializedName("original_language")
     val originalLanguage: String = "",
     @SerializedName("original_title")
@@ -41,5 +43,4 @@ data class MovieDTO(
     @SerializedName("revenue")
     val revenue: Int?,
     var favorite:Boolean=false,
-    var section:Int=0
-): Parcelable
+    var section:Int=0)

@@ -46,11 +46,11 @@ class RemoteDataSource {
         movieApi.getMovie(movieId,BuildConfig.AMMY_API_KEY,lan).enqueue(callback)
     }
 
-    fun getNowPlayingList(lan:String, callback: Callback<MovieListDTO>,page:Int) {
-        movieListApi.getNowPlayMovie(BuildConfig.AMMY_API_KEY,lan,page).enqueue(callback)
+    fun getNowPlayingList(lan:String, callback: Callback<MovieListDTO>,page:Int,adultAdded:Boolean) {
+        movieListApi.getNowPlayMovie(BuildConfig.AMMY_API_KEY,lan,page,adultAdded).enqueue(callback)
     }
-    fun getUpcomingList(lan:String, callback: Callback<MovieListDTO>,page: Int) {
-        movieListApi.getNowPlayMovie(BuildConfig.AMMY_API_KEY,lan,page).enqueue(callback)
+    fun getUpcomingList(lan:String, callback: Callback<MovieListDTO>,page: Int,adultAdded:Boolean) {
+        movieListApi.getNowPlayMovie(BuildConfig.AMMY_API_KEY,lan,page,adultAdded).enqueue(callback)
     }
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {
