@@ -16,4 +16,9 @@
     <string name="revenue">Revenue</string>
     <string name="description">Description</string>
     <string name="res_view_come">Upcoming</string>
+    <string name = "error">Error</string>
+    <string name = "reload">Reload</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="ratings">Ratings</string>
 </resources>

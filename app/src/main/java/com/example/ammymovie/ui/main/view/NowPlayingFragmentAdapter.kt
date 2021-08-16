@@ -5,20 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.R
 import com.example.ammymovie.ui.main.model.Movie
 
+
 class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter.ViewHolder>() {
 
     // Адаптер для первого списка
-    private var movieData: List<Movie> = emptyList()
-    private var itemClickListener: OnItemClickListener? = null
+    internal var movieData: List<Movie> = emptyList()
 
-    fun setData(data: List<Movie>) {
-        movieData = data
-        notifyDataSetChanged()
-    }
+    //первый способ реализации слушателя. Через функцию высшего порядка
+    private var onSomeItemClickListener: ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -39,29 +38,32 @@ class NowPlayingFragmentAdapter : RecyclerView.Adapter<NowPlayingFragmentAdapter
         return movieData.size
     }
 
-    // Интерфейс для обработки нажатий, как в ListView
-    fun interface OnItemClickListener {
-        fun onItemClick(movie: Movie)
-    }
-
     // Сеттер слушателя нажатий
-    fun setOnItemClickListener(itemClickListener: OnItemClickListener) {
-        this.itemClickListener = itemClickListener
+    fun setOnItemClickListener(onSomeItemClickListener: (Movie) -> Unit) {
+        this.onSomeItemClickListener = onSomeItemClickListener
     }
 
     fun removeListener() {
-        itemClickListener = null
+        onSomeItemClickListener = null
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        //перепишем при помощи функции расширения
         fun bind(movie: Movie) {
-            itemView.findViewById<TextView>(R.id.title_play).text = movie.name
-            itemView.findViewById<TextView>(R.id.rating).text = movie.rating
-            itemView.findViewById<TextView>(R.id.date_play).text = movie.releaseDate.toString()
-            itemView.findViewById<AppCompatImageView>(R.id.image_view_play).setOnClickListener {
-                itemClickListener?.onItemClick(movie)
+            itemView.apply {
+                findViewById<TextView>(R.id.title_play).text = movie.name
+                findViewById<TextView>(R.id.rating).text = movie.rating
+                // меняем формат даты на DATE_TIME_FORMAT, и тип на string
+                findViewById<TextView>(R.id.date_play).text = movie.releaseDate.format()
+                findViewById<CardView>(R.id.card_play).setOnClickListener {
+                    onSomeItemClickListener?.invoke(movie)
+                }
+                val imageMovie = findViewById<AppCompatImageView>(R.id.image_view_play)
+                imageMovie.createImageFromResource()
+                imageMovie.setOnClickListener {
+                    onSomeItemClickListener?.invoke(movie)
+                }
             }
         }
     }
-
 }

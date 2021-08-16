@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_view_play"
-        android:layout_width="@dimen/item_width"
-        android:layout_height="@dimen/item_height"
-        app:srcCompat="@drawable/cinematografico"
-        android:clickable="true"
-        android:scaleType="centerCrop"
-        android:focusable="true" />
-    <TextView
-        android:id="@+id/title_play"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/item_naming"
-        android:gravity="center"
-        android:textSize="@dimen/title_size"
-        android:textColor="@color/teal_700"/>
-    <TextView
-        android:id="@+id/date_play"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/release_date"
-        android:textSize="@dimen/release_date" />
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    android:id="@+id/card_play">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="end">
-
+        android:orientation="vertical">
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/favoriteIcone"
-            android:layout_width="@dimen/star"
-            android:layout_gravity="center"
-            android:layout_height="@dimen/star"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            android:id="@+id/image_view_play"
+            android:layout_width="@dimen/item_width"
+            android:layout_height="@dimen/item_height"
+            android:clickable="true"
+            android:scaleType="centerCrop"
+            android:focusable="true" />
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/title_play"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/rating"
-            android:textStyle="bold"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:text="@string/item_naming"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            android:textColor="@color/teal_700"/>
+        <TextView
+            android:id="@+id/date_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/release_date"
+            android:textSize="@dimen/release_date" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/favoriteIcone"
+                android:layout_width="@dimen/star"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/star"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+        </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

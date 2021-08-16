@@ -5,21 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ammymovie.R
 import com.example.ammymovie.ui.main.model.Movie
-
-
 class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.ViewHolder>() {
 
     //Адаптер для второго списка
-    private var movieData: List<Movie> = emptyList()
-    private var itemClickListener: OnItemClickListener? = null
+    internal var movieData: List<Movie> = emptyList()
 
-    fun setData(data: List<Movie>) {
-        movieData = data
-        notifyDataSetChanged()
-    }
+    //второй способ реализации слуштеля, через функциональный интерфейс
+    private var itemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,7 +25,6 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_upcoming, parent, false) as View
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -53,13 +48,23 @@ class UpcomingFragmentAdapter : RecyclerView.Adapter<UpcomingFragmentAdapter.Vie
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(movie: Movie) {
-            itemView.findViewById<TextView>(R.id.title_upcome).text = movie.name
-            itemView.findViewById<TextView>(R.id.date_upcome).text = movie.releaseDate.toString()
-            itemView.findViewById<TextView>(R.id.genre_item).text = movie.genre
-            itemView.findViewById<AppCompatImageView>(R.id.image_view_come).setOnClickListener {
-                itemClickListener?.onItemClick(movie)
+            //перепишем при помощи функции расширения
+            itemView.apply {
+                findViewById<TextView>(R.id.title_upcome).text = movie.name
+                // меняем формат даты на DATE_TIME_FORMAT, и тип на string
+                findViewById<TextView>(R.id.date_upcome).text =movie.releaseDate.format()
+                findViewById<TextView>(R.id.genre_item).text = movie.genre
+            // вызовем по цепочке
+            }.also {
+                    it.findViewById<CardView>(R.id.card_come).setOnClickListener {
+                        itemClickListener?.onItemClick(movie)
+                    }
+                    it.findViewById<AppCompatImageView>(R.id.image_view_come).setOnClickListener {
+                        itemClickListener?.onItemClick(movie)
+                    }
             }
+
         }
     }
-
 }
+
