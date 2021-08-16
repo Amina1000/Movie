@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentSearchBinding
 import com.example.ammymovie.domain.model.MovieDTO
-import com.example.ammymovie.domain.model.MovieSection
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.common.SearchViewModelFactory
 import com.example.ammymovie.ui.detail.DetailsFragment
