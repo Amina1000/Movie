@@ -18,9 +18,12 @@ interface MovieRepoDao {
     fun adult(adultAdded:Boolean): List<MovieEntityRepoRoomDto>
 
     @Query("SELECT * FROM MovieEntityRepoRoomDto WHERE id ==:id")
-    fun getIdByData(id: Int): List<MovieEntityRepoRoomDto>
+    fun getIdByData(id: Int): MovieEntityRepoRoomDto
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Query("UPDATE MovieEntityRepoRoomDto SET favorite=:favorite WHERE id = :id")
+    fun updateFavorite(favorite:Boolean, id:Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(entity: MovieEntityRepoRoomDto)
 
     @Update

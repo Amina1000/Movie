@@ -1,12 +1,17 @@
 package com.example.ammymovie.ui.detail
 
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.ammymovie.App
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.repository.DetailsRepository
-import com.example.ammymovie.domain.repository.impls.web.WebDetailsRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.DetailsRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.MainRepositoryImpl
+import com.example.ammymovie.domain.repository.impls.web.WebDetailsRepository
 import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
 import com.example.ammymovie.ui.common.AppState
 import retrofit2.Call
@@ -24,12 +29,19 @@ import java.io.IOException
 @RequiresApi(Build.VERSION_CODES.N)
 class DetailsViewModel (
     val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val detailsRepositoryImpl: DetailsRepository = WebDetailsRepositoryImpl(RemoteDataSource())
+    private val detailsRepositoryImpl: DetailsRepository = DetailsRepositoryImpl(
+        RemoteDataSource(),
+        App.getMovieDao(),
+        Handler(Looper.getMainLooper()))
 ) : ViewModel() {
 
     fun getMovieFromRemoteSource(movieLink:Int?, lan:String) {
         detailsLiveData.value = AppState.Loading
         detailsRepositoryImpl.getMovieDetailsFromServer(movieLink,lan,callBack)
+    }
+
+    fun saveDetails(movieDTO: MovieDTO) {
+        detailsRepositoryImpl.saveDetails(movieDTO)
     }
 
     private val callBack = object : Callback<MovieDTO> {

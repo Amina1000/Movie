@@ -1,6 +1,7 @@
 package com.example.ammymovie.domain.repository
 
 import com.example.ammymovie.domain.model.MovieDTO
+import com.example.ammymovie.domain.model.MovieListDTO
 import retrofit2.Callback
 
 
@@ -12,4 +13,5 @@ import retrofit2.Callback
  */
 interface DetailsRepository {
     fun getMovieDetailsFromServer(movieId: Int?, lan:String, callback: Callback<MovieDTO>)
+    fun saveDetails(movieDTO: MovieDTO)
 }

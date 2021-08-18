@@ -74,6 +74,9 @@ class DetailsFragment : Fragment() {
                         description.text = movieDTO.overview
                         dateRelease.text = movieDTO.releaseDate
                         imageViewCome.loadImageFromResource(movieDTO.posterPath)
+                        movieBundle?.let{
+                            movieDTO.favorite = it.favorite
+                        }
                         btnFavorite.setBackgroundResource(
                             changeBackButton(movieDTO.favorite)
                         )
@@ -81,6 +84,7 @@ class DetailsFragment : Fragment() {
                             val favorite = !movieDTO.favorite
                             binding.btnFavorite.setBackgroundResource(changeBackButton(favorite))
                             movieDTO.favorite = favorite
+                            viewModel.saveDetails(movieDTO)
                         }
                     }
                 }

@@ -11,9 +11,9 @@ import retrofit2.Callback
  * 23.07.2021
  */
 
-class WebDetailsRepositoryImpl(private val remoteDataSource: RemoteDataSource) : DetailsRepository {
+class WebDetailsRepository(private val remoteDataSource: RemoteDataSource) {
 
-    override fun getMovieDetailsFromServer(
+    fun getMovieDetailsFromServer(
         movieId: Int?,
         lan: String,
         callback: Callback<MovieDTO>
@@ -21,7 +21,6 @@ class WebDetailsRepositoryImpl(private val remoteDataSource: RemoteDataSource) :
         movieId?.let {
             remoteDataSource.getMovieDetails(it, lan, callback)
         }
-
     }
 }
 
