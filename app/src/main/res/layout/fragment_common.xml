@@ -7,13 +7,13 @@
     tools:context=".ui.search.SearchFragment">
 
     <LinearLayout
-        android:id="@+id/searchView"
+        android:id="@+id/commonView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_search"
+            android:id="@+id/recycler_common"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

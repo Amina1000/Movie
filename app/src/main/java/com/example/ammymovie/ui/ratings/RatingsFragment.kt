@@ -1,13 +1,13 @@
-package com.example.ammymovie.ui.search
+package com.example.ammymovie.ui.ratings
 
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,26 +16,23 @@ import com.example.ammymovie.databinding.FragmentCommonBinding
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.common.CommonFragmentAdapter
-import com.example.ammymovie.ui.common.SearchViewModelFactory
+import com.example.ammymovie.ui.common.LocalMovieViewModel
 import com.example.ammymovie.ui.detail.DetailsFragment
 import com.example.ammymovie.utils.hideIf
 import com.example.ammymovie.utils.hideKeyboard
 import com.example.ammymovie.utils.showIf
 import com.example.ammymovie.utils.showSnackBar
 
-private const val BUNDLE_EXTRA = "search"
-
-class SearchFragment : Fragment() {
+class RatingsFragment : Fragment() {
 
     companion object {
-        fun newInstance(bundle: Bundle) = SearchFragment().apply { arguments = bundle }
+        fun newInstance() = RatingsFragment()
     }
 
-    private val viewModel: SearchViewModel by viewModels { SearchViewModelFactory(requireActivity().application) }
+    private lateinit var viewModel: LocalMovieViewModel
     private var _binding: FragmentCommonBinding? = null
     private val adapter = CommonFragmentAdapter()
     private var isLandscape = false
-    private val query: String? by lazy { arguments?.getString(BUNDLE_EXTRA, "") }
     private val binding
         get() = _binding!!
 
@@ -52,6 +49,11 @@ class SearchFragment : Fragment() {
         // Инициализация данных
         initRecycler()
         initViewModel()
+    }
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(LocalMovieViewModel::class.java)
+        viewModel.localLiveData.observe(viewLifecycleOwner) { renderData(it) }
+        viewModel.getMovieFromLocal()
     }
 
     private fun initRecycler() {
@@ -84,13 +86,6 @@ class SearchFragment : Fragment() {
         return itemDecoration
     }
 
-    private fun initViewModel() {
-        viewModel.liveDataToObserve.observe(viewLifecycleOwner) { renderData(it) }
-        query?.let {
-            viewModel.getSearchingMovieServer("ru-RU", it)
-        }
-
-    }
 
     private fun renderData(appState: AppState) = with(binding) {
         //Заполняем списки
@@ -99,7 +94,7 @@ class SearchFragment : Fragment() {
                 loadingLayout.hideIf { true }
                 // используем функцию расширения вместо setData
                 appState.movieDataList.results?.let {
-                    adapter.movieListData = it
+                    adapter.movieListData = it.sortedByDescending { movieDTO -> movieDTO.voteAverage }
                     adapter.notifyDataSetChanged()
                     adapter.setOnItemClickListener { p -> openScreen(p) }
 
@@ -112,11 +107,7 @@ class SearchFragment : Fragment() {
                 loadingLayout.hideIf { true }
                 commonView.showSnackBar(getString(R.string.error),
                     getString(R.string.reload),
-                    {
-                        query?.let {q->
-                            viewModel.getSearchingMovieServer("ru-RU", q)
-                        }
-                    })
+                    {viewModel.getMovieFromLocal()})
                 commonView.hideKeyboard()
             }
             else -> commonView.showSnackBar("Нет данных для загрузки")
@@ -131,4 +122,5 @@ class SearchFragment : Fragment() {
                 })
         )?.addToBackStack("")?.commitAllowingStateLoss()
     }
+
 }

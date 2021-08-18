@@ -56,3 +56,26 @@ fun convertMovieListDTOMovieEntity(movieListDTO: MovieListDTO): List<MovieEntity
         )
     }
 }
+
+fun convertMovieDTOMovieEntity(movieDTO: MovieDTO): MovieEntityRepoRoomDto {
+    return movieDTO.let {
+        MovieEntityRepoRoomDto(
+            it.id,
+            it.adult,
+            "",
+            it.originalLanguage,
+            it.originalTitle,
+            it.overview,
+            it.popularity,
+            it.posterPath,
+            it.releaseDate,
+            it.originalTitle,
+            it.voteAverage,
+            it.voteCount,
+            it.duration,
+            it.revenue,
+            it.favorite,
+            it.section
+        )
+    }
+}

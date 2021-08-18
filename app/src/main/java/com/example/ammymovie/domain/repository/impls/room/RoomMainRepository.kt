@@ -3,6 +3,7 @@ package com.example.ammymovie.domain.repository.impls.room
 import android.os.Handler
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.model.MovieListDTO
+import com.example.ammymovie.utils.convertMovieDTOMovieEntity
 import com.example.ammymovie.utils.convertMovieEntityToMovie
 import com.example.ammymovie.utils.convertMovieListDTOMovieEntity
 
@@ -24,8 +25,7 @@ class RoomMainRepository(private val dao: MovieRepoDao, private val handler: Han
         Thread {
             val movieEntityList = convertMovieListDTOMovieEntity(movieListDTO)
             movieEntityList.forEach {
-                val entity = dao.getIdByData(it.id)
-                entity?.let {en->
+                dao.getIdByData(it.id)?.let { en ->
                     it.favorite = en.favorite
                 }
                 dao.insert(it)
@@ -35,7 +35,9 @@ class RoomMainRepository(private val dao: MovieRepoDao, private val handler: Han
 
     fun saveDetails(movieDTO: MovieDTO) {
         Thread {
-            dao.updateFavorite(movieDTO.favorite,movieDTO.id)
+            val movieEntity = dao.getIdByData(movieDTO.id)?:convertMovieDTOMovieEntity(movieDTO)
+            movieEntity.favorite = movieDTO.favorite
+            dao.insert(movieEntity)
         }.start()
     }
 }

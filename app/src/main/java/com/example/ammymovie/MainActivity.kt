@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.ammymovie.databinding.MainActivityBinding
+import com.example.ammymovie.ui.favorite.FavoriteFragment
 import com.example.ammymovie.ui.main.MainFragment
+import com.example.ammymovie.ui.ratings.RatingsFragment
 import com.example.ammymovie.ui.search.SearchFragment
 import com.example.ammymovie.ui.settings.SettingsFragment
 
@@ -43,11 +45,11 @@ class MainActivity : AppCompatActivity() {
                             true
                         }
                         R.id.item_favorites -> {
-                            loadFragment(MainFragment.newInstance())
+                            loadFragment(FavoriteFragment.newInstance())
                             true
                         }
                         R.id.item_ratings -> {
-                            loadFragment(MainFragment.newInstance())
+                            loadFragment(RatingsFragment.newInstance())
                             true
                         }
                         else -> false
