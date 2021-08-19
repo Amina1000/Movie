@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.example.ammymovie.R
 import com.example.ammymovie.databinding.FragmentMainBinding
 import com.example.ammymovie.domain.model.MovieDTO
 import com.example.ammymovie.domain.model.MovieSection
-import com.example.ammymovie.service.MainBroadcastReceiver
 import com.example.ammymovie.ui.common.AppState
 import com.example.ammymovie.ui.common.MainViewModelFactory
 import com.example.ammymovie.ui.detail.DetailsFragment
@@ -41,19 +39,6 @@ class MainFragment : Fragment() {
     private var isLandscape = false
     private val binding
         get() = _binding!!
-
-    //Урок 6 создаем объект ресивера
-    private val receiver = MainBroadcastReceiver()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Урок 6
-        // регистрируем ресивер смены языка.
-        context?.let {
-            LocalBroadcastManager.getInstance(it)
-                .registerReceiver(receiver, IntentFilter(Intent.ACTION_LOCALE_CHANGED))
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -158,14 +143,5 @@ class MainFragment : Fragment() {
         _binding = null
         playNowAdapter.removeListener()
         super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        //Урок 6
-        //Не забываем снять подписку на события, когда они уже никому не нужны.
-        context?.let {
-            LocalBroadcastManager.getInstance(it).unregisterReceiver(receiver)
-        }
-        super.onDestroy()
     }
 }

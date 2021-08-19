@@ -2,14 +2,11 @@ package com.example.ammymovie.domain.repository.impls
 
 import android.os.Handler
 import com.example.ammymovie.domain.model.MovieDTO
-import com.example.ammymovie.domain.model.MovieListDTO
 import com.example.ammymovie.domain.repository.DetailsRepository
-import com.example.ammymovie.domain.repository.MainRepository
 import com.example.ammymovie.domain.repository.impls.room.MovieRepoDao
 import com.example.ammymovie.domain.repository.impls.room.RoomMainRepository
 import com.example.ammymovie.domain.repository.impls.web.RemoteDataSource
 import com.example.ammymovie.domain.repository.impls.web.WebDetailsRepository
-import com.example.ammymovie.domain.repository.impls.web.WebMainRepository
 import retrofit2.Callback
 
 class DetailsRepositoryImpl(

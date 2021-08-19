@@ -42,6 +42,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            versionNameSuffix "-debug"
+        }
     }
     buildTypes.each {
         Properties properties = new Properties()
