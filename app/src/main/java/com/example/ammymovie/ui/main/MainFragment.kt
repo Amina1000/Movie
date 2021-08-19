@@ -1,7 +1,5 @@
 package com.example.ammymovie.ui.main
 
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
