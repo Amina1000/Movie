@@ -17,3 +17,5 @@
 .cxx
 local.properties
 /app/google-services.json
+/app/keystore_ammy_movie.jks
+/keystore.properties
