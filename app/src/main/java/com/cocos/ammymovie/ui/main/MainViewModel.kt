@@ -13,6 +13,7 @@ import com.cocos.ammymovie.domain.repository.MainRepository
 import com.cocos.ammymovie.domain.repository.impls.MainRepositoryImpl
 import com.cocos.ammymovie.domain.repository.impls.web.RemoteDataSource
 import com.cocos.ammymovie.ui.common.AppState
+import com.cocos.ammymovie.utils.convertMovieListDTOMovieEntity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,7 @@ class MainViewModel(
                 val serverResponse: MovieListDTO? = response.body()
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse, movieSection)
+                    liveDataToObserve.postValue(AppState.Success(serverResponse))
                 } else {
                     AppState.Error(Throwable("Load error"))
                 }
@@ -54,17 +56,14 @@ class MainViewModel(
         with(mainRepositoryImpl) {
             getNowPlayingFromServer(lan, callBack(MovieSection.PLAY), 1, adultAdded)
             getUpcomingFromServer(lan, callBack(MovieSection.UPCOMING), 1, adultAdded)
-            getMovieFromLocalStorage(
-                { repos ->
-                    liveDataToObserve.postValue(AppState.Success(repos))
-                },
-                adultAdded
-            )
         }
+    }
+
+    fun saveMovieToDatabase(movieListDTO: MovieListDTO){
+        mainRepositoryImpl.saveEntity(movieListDTO)
     }
 
     private fun checkResponse(serverResponse: MovieListDTO, movieSection: MovieSection) {
         serverResponse.results?.forEach { it.section = movieSection.section }
-        serverResponse.let { mainRepositoryImpl.saveEntity(it) }
     }
 }

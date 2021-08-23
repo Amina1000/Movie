@@ -102,10 +102,12 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 loadingLayout.hideIf { true }
                 // используем функцию расширения вместо setData
-                appState.movieDataList.results?.let {
+                val movieComoList = appState.getMovieList()
+                movieComoList.results?.let {
                     playNowAdapter.movieList = it.filter { movieDTO ->
                         movieDTO.section == MovieSection.PLAY.section
                     }
+
                     playNowAdapter.notifyDataSetChanged()
                     playNowAdapter.setOnItemClickListener { p -> openScreen(p) }
 
@@ -114,7 +116,9 @@ class MainFragment : Fragment() {
                     }
                     upcomingAdapter.notifyDataSetChanged()
                     upcomingAdapter.setOnItemClickListener { u -> openScreen(u) }
+                    viewModel.saveMovieToDatabase(movieComoList)
                 }
+
             }
             is AppState.Loading -> {
                 loadingLayout.showIf { true }
