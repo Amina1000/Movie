@@ -27,7 +27,7 @@ class DetailsRepositoryImpl(
     }
 
 
-    override fun saveDetails(movieDTO: MovieDTO) {
+    override fun saveDetails(movieDTO: MovieDTO?) {
         roomRepo.saveDetails(movieDTO)
     }
 }

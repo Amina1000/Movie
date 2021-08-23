@@ -18,7 +18,7 @@ interface MovieRepoDao {
     fun adult(adultAdded:Boolean): List<MovieEntityRepoRoomDto>
 
     @Query("SELECT * FROM MovieEntityRepoRoomDto WHERE id ==:id")
-    fun getIdByData(id: Int): MovieEntityRepoRoomDto
+    fun getIdByData(id: Int): MovieEntityRepoRoomDto?
 
     @Query("UPDATE MovieEntityRepoRoomDto SET favorite=:favorite WHERE id = :id")
     fun updateFavorite(favorite:Boolean, id:Int)

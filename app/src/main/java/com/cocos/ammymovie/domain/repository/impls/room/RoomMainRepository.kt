@@ -33,11 +33,13 @@ class RoomMainRepository(private val dao: MovieRepoDao, private val handler: Han
         }.start()
     }
 
-    fun saveDetails(movieDTO: MovieDTO) {
-        Thread {
-            val movieEntity = dao.getIdByData(movieDTO.id)?:convertMovieDTOMovieEntity(movieDTO)
-            movieEntity.favorite = movieDTO.favorite
-            dao.insert(movieEntity)
-        }.start()
+    fun saveDetails(movieDTO: MovieDTO?) {
+        movieDTO?.let {
+            Thread {
+                val movieEntity = dao.getIdByData(it.id)?:convertMovieDTOMovieEntity(movieDTO)
+                movieEntity?.favorite = it.favorite
+                movieEntity?.let {en-> dao.insert(en) }
+            }.start()
+        }
     }
 }

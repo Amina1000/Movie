@@ -57,8 +57,8 @@ fun convertMovieListDTOMovieEntity(movieListDTO: MovieListDTO): List<MovieEntity
     }
 }
 
-fun convertMovieDTOMovieEntity(movieDTO: MovieDTO): MovieEntityRepoRoomDto {
-    return movieDTO.let {
+fun convertMovieDTOMovieEntity(movieDTO: MovieDTO?): MovieEntityRepoRoomDto? {
+    return movieDTO?.let {
         MovieEntityRepoRoomDto(
             it.id,
             it.adult,

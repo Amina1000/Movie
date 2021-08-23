@@ -19,23 +19,23 @@ data class MovieDTO(
     @SerializedName("genre_ids")
     val genreIds: List<Int> = listOf(),
     @SerializedName("original_language")
-    val originalLanguage: String = "",
+    val originalLanguage: String?,
     @SerializedName("original_title")
-    val originalTitle: String = "",
+    val originalTitle: String?,
     @SerializedName("overview")
-    val overview: String = "",
+    val overview: String?,
     @SerializedName("popularity")
-    val popularity: Double = 0.toDouble(),
+    val popularity: Double?,
     @SerializedName("poster_path")
-    val posterPath: String = "",
+    val posterPath: String?,
     @SerializedName("release_date")
-    val releaseDate: String = "",
+    val releaseDate: String?,
     @SerializedName("title")
-    val title: String = "",
+    val title: String?,
     @SerializedName("vote_average")
-    val voteAverage: Double = 0.toDouble(),
+    val voteAverage: Double?,
     @SerializedName("vote_count")
-    val voteCount: Int = 0,
+    val voteCount: Int?,
     @SerializedName("duration")
     val duration: String?,
     @SerializedName("revenue")
