@@ -17,11 +17,7 @@ import com.cocos.ammymovie.domain.model.MovieDTO
 import com.cocos.ammymovie.ui.common.AppState
 import com.cocos.ammymovie.ui.common.CommonFragmentAdapter
 import com.cocos.ammymovie.ui.common.SearchViewModelFactory
-import com.cocos.ammymovie.ui.detail.DetailsFragment
-import com.cocos.ammymovie.utils.hideIf
-import com.cocos.ammymovie.utils.hideKeyboard
-import com.cocos.ammymovie.utils.showIf
-import com.cocos.ammymovie.utils.showSnackBar
+import com.cocos.ammymovie.utils.*
 
 private const val BUNDLE_EXTRA = "search"
 
@@ -124,11 +120,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun openScreen(movie: MovieDTO) {
-        activity?.supportFragmentManager?.beginTransaction()?.replace(
-            R.id.container, DetailsFragment.newInstance(Bundle()
-                .apply {
-                    putParcelable("movie", movie)
-                })
-        )?.addToBackStack("")?.commitAllowingStateLoss()
+        navigateTo(requireActivity(),R.id.detailsFragment,
+            Bundle().apply {
+                putParcelable("movie", movie)
+            })
     }
 }

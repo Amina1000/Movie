@@ -22,8 +22,10 @@ import java.io.IOException
  */
 
 class RemoteDataSource {
+    private val baseUrl = "https://api.themoviedb.org/3/"
+
     private val movieApi = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/3/")
+        .baseUrl(baseUrl)
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder().setLenient().create()
@@ -33,7 +35,7 @@ class RemoteDataSource {
         .build().create(MovieAPI::class.java)
 
     private val movieListApi = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/3/")
+        .baseUrl(baseUrl)
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder().setLenient().create()

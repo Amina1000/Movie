@@ -17,17 +17,12 @@ import com.cocos.ammymovie.domain.model.MovieDTO
 import com.cocos.ammymovie.domain.model.MovieSection
 import com.cocos.ammymovie.ui.common.AppState
 import com.cocos.ammymovie.ui.common.MainViewModelFactory
-import com.cocos.ammymovie.ui.detail.DetailsFragment
-import com.cocos.ammymovie.utils.hideIf
-import com.cocos.ammymovie.utils.hideKeyboard
-import com.cocos.ammymovie.utils.showIf
-import com.cocos.ammymovie.utils.showSnackBar
+import com.cocos.ammymovie.utils.*
 
 class MainFragment : Fragment() {
 
     companion object {
         const val NUM_COLUMN = 2
-        fun newInstance() = MainFragment()
     }
 
     private val viewModel: MainViewModel by viewModels { MainViewModelFactory(requireActivity().application) }
@@ -109,7 +104,7 @@ class MainFragment : Fragment() {
                     }
 
                     playNowAdapter.notifyDataSetChanged()
-                    playNowAdapter.setOnItemClickListener { p -> openScreen(p) }
+                    playNowAdapter.setOnItemClickListener { p -> openScreen(p)}
 
                     upcomingAdapter.movieListData = it.filter { movieDTO ->
                         movieDTO.section == MovieSection.UPCOMING.section
@@ -135,12 +130,10 @@ class MainFragment : Fragment() {
     }
 
     private fun openScreen(movie: MovieDTO) {
-        activity?.supportFragmentManager?.beginTransaction()?.replace(
-            R.id.container, DetailsFragment.newInstance(Bundle()
-                .apply {
+        navigateTo(requireActivity(),R.id.detailsFragment,
+            Bundle().apply {
                     putParcelable("movie", movie)
                 })
-        )?.addToBackStack("")?.commitAllowingStateLoss()
     }
 
     override fun onDestroyView() {

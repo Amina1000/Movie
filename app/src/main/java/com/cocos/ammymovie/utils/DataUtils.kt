@@ -1,5 +1,9 @@
 package com.cocos.ammymovie.utils
 
+import android.app.Activity
+import android.os.Bundle
+import androidx.navigation.Navigation
+import com.cocos.ammymovie.R
 import com.cocos.ammymovie.domain.model.MovieDTO
 import com.cocos.ammymovie.domain.model.MovieListDTO
 import com.cocos.ammymovie.domain.repository.impls.room.MovieEntityRepoRoomDto
@@ -77,5 +81,17 @@ fun convertMovieDTOMovieEntity(movieDTO: MovieDTO?): MovieEntityRepoRoomDto? {
             it.favorite,
             it.section
         )
+    }
+}
+
+fun navigateTo(activity:Activity, target: Int, bundle: Bundle? = null) {
+    val navController = Navigation.findNavController(activity, R.id.container)
+    if (bundle == null)
+        navController.also {
+            it.navigate(target)
+        } else {
+        navController.also {
+            it.navigate(target, bundle)
+        }
     }
 }

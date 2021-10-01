@@ -10,13 +10,9 @@ import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.cocos.ammymovie.databinding.MainActivityBinding
-import com.cocos.ammymovie.ui.favorite.FavoriteFragment
-import com.cocos.ammymovie.ui.main.MainFragment
-import com.cocos.ammymovie.ui.ratings.RatingsFragment
-import com.cocos.ammymovie.ui.search.SearchFragment
-import com.cocos.ammymovie.ui.settings.SettingsFragment
+import com.cocos.ammymovie.utils.navigateTo
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,9 +25,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         initNavigationMenu()
-        when (savedInstanceState) {
-            null -> loadFragment(MainFragment.newInstance())
-        }
     }
 
     private fun initNavigationMenu() {
@@ -41,15 +34,15 @@ class MainActivity : AppCompatActivity() {
                 binding.navigation?.setOnNavigationItemSelectedListener {
                     when (it.itemId) {
                         R.id.item_home -> {
-                            loadFragment(MainFragment.newInstance())
+                            navigateTo(this@MainActivity,R.id.mainFragment)
                             true
                         }
                         R.id.item_favorites -> {
-                            loadFragment(FavoriteFragment.newInstance())
+                            navigateTo(this@MainActivity,R.id.favoriteFragment)
                             true
                         }
                         R.id.item_ratings -> {
-                            loadFragment(RatingsFragment.newInstance())
+                            navigateTo(this@MainActivity,R.id.ratingsFragment)
                             true
                         }
                         else -> false
@@ -58,14 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        // load fragment
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -82,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 searchItem.collapseActionView()
                 val bundle = Bundle()
                 bundle.putString("search", query?.trim())
-                loadFragment(SearchFragment.newInstance(bundle))
+                navigateTo(this@MainActivity,R.id.searchFragment, bundle)
                 return true
             }
 
@@ -95,13 +80,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.action_settings -> {
-                loadFragment(SettingsFragment())
+                navigateTo(this@MainActivity,R.id.settingsFragment)
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.container)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 }
 
 

@@ -2,11 +2,11 @@ package com.cocos.ammymovie.ui.ratings
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,17 +17,9 @@ import com.cocos.ammymovie.domain.model.MovieDTO
 import com.cocos.ammymovie.ui.common.AppState
 import com.cocos.ammymovie.ui.common.CommonFragmentAdapter
 import com.cocos.ammymovie.ui.common.LocalMovieViewModel
-import com.cocos.ammymovie.ui.detail.DetailsFragment
-import com.cocos.ammymovie.utils.hideIf
-import com.cocos.ammymovie.utils.hideKeyboard
-import com.cocos.ammymovie.utils.showIf
-import com.cocos.ammymovie.utils.showSnackBar
+import com.cocos.ammymovie.utils.*
 
 class RatingsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = RatingsFragment()
-    }
 
     private lateinit var viewModel: LocalMovieViewModel
     private var _binding: FragmentCommonBinding? = null
@@ -115,12 +107,10 @@ class RatingsFragment : Fragment() {
     }
 
     private fun openScreen(movie: MovieDTO) {
-        activity?.supportFragmentManager?.beginTransaction()?.replace(
-            R.id.container, DetailsFragment.newInstance(Bundle()
-                .apply {
-                    putParcelable("movie", movie)
-                })
-        )?.addToBackStack("")?.commitAllowingStateLoss()
+        navigateTo(requireActivity(),R.id.detailsFragment,
+            Bundle().apply {
+                putParcelable("movie", movie)
+            })
     }
 
 }
